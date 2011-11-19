@@ -3,6 +3,8 @@
 #include <QDebug>
 #include <QStringList>
 
+static void cleanUdevDevices (struct udev *udev, const char *subsystem);
+
 Udev::Udev(QObject *parent) :
     QObject(parent)
 {
@@ -21,8 +23,38 @@ Udev::Udev(QObject *parent) :
 
 Udev::~Udev()
 {
+    cleanUdevDevices (udev, "input");
+    cleanUdevDevices (udev, "hid");
     udev_unref(udev);
     udev_monitor_unref(mon);
+}
+
+static void cleanUdevDevices (struct udev *udev, const char *subsystem)
+{
+    struct udev_enumerate *enumerate;
+    struct udev_list_entry *devices, *dev_list_entry;
+    struct udev_device *dev;
+
+    enumerate = udev_enumerate_new(udev);
+    udev_enumerate_add_match_subsystem(enumerate, subsystem);
+    udev_enumerate_scan_devices(enumerate);
+    devices = udev_enumerate_get_list_entry(enumerate);
+    /* For each item enumerated, print out its information.
+       udev_list_entry_foreach is a macro which expands to
+       a loop. The loop will be executed for each member in
+       devices, setting dev_list_entry to a list entry
+       which contains the device's path in /sys. */
+    udev_list_entry_foreach(dev_list_entry, devices) {
+        const char *path;
+        /* Get the filename of the /sys entry for the device
+           and create a udev_device object (dev) representing it */
+        path = udev_list_entry_get_name(dev_list_entry);
+        dev = udev_device_new_from_syspath(udev, path);
+
+        udev_device_unref(dev);
+
+    }
+    udev_enumerate_unref(enumerate);
 }
 
 int Udev::getFd ()

@@ -67,8 +67,6 @@ void MainWindow::addDevice (struct udev_device *device)
         return;
     }
 
-    qDebug() << kernelDevice->getName();
-
     hid = udev->getHid(device);
 
     qDev = new QDevice (kernelDevice, hid, scene, &viewRect, this);
@@ -89,13 +87,16 @@ void MainWindow::removeDevice (struct udev_device *device)
         }
     }
 
-    if (index < 0)
+    if (index < 0) {
+        udev_device_unref(device);
         return;
+    }
 
     qDevices.removeAt(index);
     index = ui->tabWidgetInputDevices->indexOf(matchedQDev);
     ui->tabWidgetInputDevices->removeTab(index);
     delete matchedQDev;
+    udev_device_unref(device);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
