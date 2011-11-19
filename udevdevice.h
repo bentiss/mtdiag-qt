@@ -1,58 +1,44 @@
 #ifndef UDEVDEVICE_H
 #define UDEVDEVICE_H
-#include <libudev.h>
 #include <QHash>
+
+struct udev;
+struct udev_device;
 
 class UdevDevice
 {
 public:
-    const char *getDevpath() {return udev_device_get_devpath(device);}
-    const char *getSubsystem() {return udev_device_get_subsystem(device);}
-    const char *getDevtype() {return udev_device_get_devtype(device);}
-    const char *getSyspath() {return udev_device_get_syspath(device);}
-    const char *getSysname() {return udev_device_get_sysname(device);}
-    const char *getSysnum() {return udev_device_get_sysnum(device);}
-    const char *getDevnode() {return udev_device_get_devnode(device);}
+    const char *getDevpath();
+    const char *getSubsystem();
+    const char *getDevtype();
+    const char *getSyspath();
+    const char *getSysname();
+    const char *getSysnum();
+    const char *getDevnode();
 
-    struct udev_list_entry *getDevlinksListEntry() {
-        return udev_device_get_devlinks_list_entry(device);}
-    struct udev_list_entry *getPropertiesListEntry() {
-        return udev_device_get_properties_list_entry(device);}
-    struct udev_list_entry *getTagsListEntry() {
-        return udev_device_get_tags_list_entry(device);}
-    const char *getPropertyValue(const char *key) {
-        return udev_device_get_property_value(device, key);}
-    const char *getDriver() {
-        return udev_device_get_driver(device);}
-    dev_t getDevnum() {
-        return udev_device_get_devnum(device);}
-    const char *getAction() {
-        return udev_device_get_action(device);}
-    unsigned long long int getSeqnum() {
-        return udev_device_get_seqnum(device);}
-    const char *getSysattrValue(const char *sysattr) {
-        return udev_device_get_sysattr_value(device, sysattr);}
+    struct udev_list_entry *getDevlinksListEntry();
+    struct udev_list_entry *getPropertiesListEntry();
+    struct udev_list_entry *getTagsListEntry();
 
-    UdevDevice *getParent() {
-        return getDevice(udev_device_get_parent(device));}
+    const char *getPropertyValue(const char *key);
+    const char *getDriver();
+    //dev_t getDevnum();
+    const char *getAction();
+    unsigned long long int getSeqnum();
+    const char *getSysattrValue(const char *sysattr);
+
+    UdevDevice *getParent();
     UdevDevice *getParentWithSubsystemDevtype(const char *subsystem,
-                                              const char *devtype) {
-        return getDevice(
-                    udev_device_get_parent_with_subsystem_devtype(device,
-                                                                  subsystem,
-                                                                  devtype));}
+                                              const char *devtype);
 
     static UdevDevice *getDevice (struct udev_device *device);
 
-    static UdevDevice *getDevice (struct udev *udev, const char *path)
-    {
-        return UdevDevice::getDevice(udev_device_new_from_syspath(udev, path));
-    }
+    static UdevDevice *getDevice (struct udev *udev, const char *path);
 
     static void cleanDevicesList (struct udev *udev);
 private:
     UdevDevice(struct udev_device *device);
-    struct udev *udev() {return udev_device_get_udev(device);}
+    struct udev *udev();
 
     struct udev_device *device;
     static QHash<struct udev_device *, UdevDevice *> devices;

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <QDebug>
 #include <QStringList>
+#include <libudev.h>
 
 Udev::Udev(QObject *parent) :
     QObject(parent)

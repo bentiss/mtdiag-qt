@@ -3,8 +3,10 @@
 
 #include <QObject>
 #include <QHash>
-#include <libudev.h>
 #include "udevdevice.h"
+
+struct udev;
+struct udev_monitor;
 
 class Udev : public QObject
 {
