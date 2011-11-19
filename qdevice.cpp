@@ -18,7 +18,7 @@ static void staticProcessEvent (struct input_event *ev, void *args)
 }
 
 QDevice::QDevice(KernelDevice *kernelDevice,
-                 struct udev_device *hid,
+                 UdevDevice *hid,
                  QGraphicsScene *scene,
                  QRect *sizeWindow,
                  QWidget *parent) :
@@ -46,7 +46,7 @@ QDevice::QDevice(KernelDevice *kernelDevice,
     form->setupUi(splitter);
     createBrushes ();
     if (hid)
-        form->lineEdit_driver->setText(udev_device_get_driver(hid));
+        form->lineEdit_driver->setText(hid->getDriver());
     else
         form->lineEdit_driver->setEnabled(false);
     form->lineEdit_node->setText(kernelDevice->getPath());
@@ -67,7 +67,6 @@ QDevice::QDevice(KernelDevice *kernelDevice,
 QDevice::~QDevice ()
 {
     delete kernelDevice;
-    udev_device_unref(hid);
     delete form;
     delete formQuirks;
     for (int i = 0; i < brushes.count(); ++i) {

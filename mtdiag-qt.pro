@@ -18,18 +18,22 @@ SOURCES += main.cpp\
     qdevice.cpp \
     touch.cpp \
     colorwidget.cpp \
-    kernelDevice.cpp
+    kernelDevice.cpp \
+    udevdevice.cpp
 
 HEADERS  += mainwindow.h \
     udev.h \
     qdevice.h \
     touch.h \
     colorwidget.h \
-    kernelDevice.h
+    kernelDevice.h \
+    udevdevice.h
 
 FORMS    += mainwindow.ui \
     quirks.ui \
     input.ui
+
+
 
 
 

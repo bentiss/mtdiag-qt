@@ -19,7 +19,7 @@ MainWindow::MainWindow(QApplication *rootApp, QWidget *parent) :
     ui->setupUi(this);
     ui->graphicsView->setScene(scene);
 
-    QList<struct udev_device *> inputDevices = udev->getInputDevices();
+    QList<UdevDevice *> inputDevices = udev->getInputDevices();
 
     for (int i = 0; i < inputDevices.count(); ++i)
         addDevice(inputDevices[i]);
@@ -50,14 +50,14 @@ bool MainWindow::isMaximized ()
     return windowState() & Qt::WindowMaximized;
 }
 
-void MainWindow::addDevice (struct udev_device *device)
+void MainWindow::addDevice (UdevDevice *device)
 {
     KernelDevice *kernelDevice;
-    struct udev_device *hid;
+    UdevDevice *hid;
     QDevice *qDev;
 
 
-    kernelDevice = new KernelDevice (udev_device_get_devnode(device));
+    kernelDevice = new KernelDevice (device->getDevnode());
 
     if (!kernelDevice->init())
         return;
@@ -74,9 +74,9 @@ void MainWindow::addDevice (struct udev_device *device)
     qDevices.append(qDev);
 }
 
-void MainWindow::removeDevice (struct udev_device *device)
+void MainWindow::removeDevice (UdevDevice *device)
 {
-    QString node = udev_device_get_devnode(device);
+    QString node = device->getDevnode();
     QDevice *matchedQDev = 0;
     int index = -1;
 
@@ -87,16 +87,13 @@ void MainWindow::removeDevice (struct udev_device *device)
         }
     }
 
-    if (index < 0) {
-        udev_device_unref(device);
+    if (index < 0)
         return;
-    }
 
     qDevices.removeAt(index);
     index = ui->tabWidgetInputDevices->indexOf(matchedQDev);
     ui->tabWidgetInputDevices->removeTab(index);
     delete matchedQDev;
-    udev_device_unref(device);
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
@@ -157,20 +154,99 @@ void MainWindow::setupDisplayView ()
 
 void MainWindow::udevEvent(int fd)
 {
-    struct udev_device *device;
+    UdevDevice *device;
     QString action;
     if (fd != udev->getFd())
         return;
 
     device = udev->event();
 
-    if (!QString(udev_device_get_sysname(device)).startsWith("event"))
+    if (!QString(device->getSysname()).startsWith("event"))
         return;
 
-    action = udev_device_get_action(device);
+    action = device->getAction();
 
     if (action == "add")
         addDevice(device);
     else if (action == "remove")
         removeDevice(device);
 }
+
+/*
+def __init__(self, qApp):
+        QtGui.QMainWindow.__init__(self)
+        self.qApp = qApp
+        if qApp:
+                qApp.installEventFilter (self)
+        Ui_MainWindow = uic.loadUiType("mainwindow.ui")[0]
+        self.ui = Ui_MainWindow ()
+        self.ui.setupUi(self)
+        self.scene = QtGui.QGraphicsScene()
+        self.ui.graphicsView.setScene(self.scene)
+        self.udev = udev.Udev()
+        self.view_width = self.view_height = None
+        devices = self.udev.get_all_input_devices()
+        self.qdevices = []
+        self.actions = []
+        self.notifiers = {}
+        self.xinput_mappings = {}
+        self.painter = QtGui.QPainter(self)
+        for device in devices:
+                self.addDevice(device)
+        floating_devices = self.udev.get_unattached_hid_usb_devices()
+        if floating_devices.has_key ('046d:c52b'):
+                del(floating_devices['046d:c52b'])
+        if len(floating_devices) == 0:
+                self.ui.menuOrphans_Usb_Hid.setEnabled(False)
+        for vidpid, devices in floating_devices.items():
+                self.actions.append(VidPidAction (vidpid, devices, self))
+        self.addNotifier(self.udev.fileno, self.udev_event)
+
+def eventFilter(self, watched, event):
+        if self.qApp != watched or (
+                event.type() != QtCore.QEvent.ApplicationActivated and
+                event.type() != QtCore.QEvent.ApplicationDeactivated):
+                return QtGui.QMainWindow.eventFilter (self, watched, event)
+
+        if event.type() == QtCore.QEvent.ApplicationActivated:
+                self.deactivate_xinput()
+        elif event.type() == QtCore.QEvent.ApplicationDeactivated:
+                self.activate_xinput()
+        return True
+
+
+def disableX11(self, value):
+        if value:
+                self.deactivate_xinput ()
+        else:
+                self.activate_xinput ()
+
+def deactivate_xinput (self):
+        self.xinput_mappings = {}
+        if not self.ui.commandLinkButton_disableX11.isChecked ():
+                return
+        for qdev in self.qdevices:
+                f = os.popen ("xinput list --short '{}'".format(qdev.dev.name), 'r')
+                regexp = r'^{}.*id=(\d*).*slave  pointer  \((\d*)\)'.format(qdev.dev.name)
+                r = re.compile(regexp)
+                for line in f.readlines ():
+                        m = r.match(line)
+                        if not m:
+                                continue
+                        id, parent = m.groups()
+                        id = int(id)
+                        parent = int(parent)
+                        self.xinput_mappings[id] = parent
+                f.close()
+        for id in self.xinput_mappings.keys():
+                command = "xinput float {}".format(id)
+                print command
+                os.system (command)
+
+def activate_xinput (self):
+        for id, parent in self.xinput_mappings.items():
+                command = "xinput reattach {} {}".format(id, parent)
+                print command
+                os.system (command)
+
+*/

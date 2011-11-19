@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QHash>
 #include <libudev.h>
+#include "udevdevice.h"
 
 class Udev : public QObject
 {
@@ -12,10 +13,10 @@ public:
     explicit Udev (QObject *parent = 0);
     ~Udev();
     int getFd ();
-    struct udev_device *event ();
+    UdevDevice *event ();
     QHash<QString, QString> getFloatingHidUsbDevices();
-    QList<struct udev_device *> getInputDevices();
-    struct udev_device *getHid(struct udev_device *device);
+    QList<UdevDevice *> getInputDevices();
+    UdevDevice *getHid(UdevDevice *device);
 
 private:
     struct udev *udev;

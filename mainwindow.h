@@ -34,8 +34,8 @@ private:
     QRect viewRect;
     QSocketNotifier *sn;
 
-    void addDevice (struct udev_device *device);
-    void removeDevice (struct udev_device *device);
+    void addDevice (UdevDevice *device);
+    void removeDevice (UdevDevice *device);
 
 protected:
     void resizeEvent(QResizeEvent *event);

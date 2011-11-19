@@ -20,7 +20,7 @@ class QDevice : public QWidget
     Q_OBJECT
 public:
     explicit QDevice(KernelDevice *kernelDevice,
-                     struct udev_device *hid,
+                     UdevDevice *hid,
                      QGraphicsScene *scene,
                      QRect *sizeWindow,
                      QWidget *parent = 0);
@@ -39,7 +39,7 @@ private:
     Ui::Form_Input *form;
     Ui::Form_Quirks *formQuirks;
     KernelDevice *kernelDevice;
-    struct udev_device *hid;
+    UdevDevice *hid;
     QGraphicsScene *scene;
     QRect *sizeWindow;
     QHash <int, Touch *> touches;
