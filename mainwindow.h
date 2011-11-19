@@ -19,8 +19,6 @@ public:
     explicit MainWindow(QApplication *rootApp, QWidget *parent = 0);
     ~MainWindow();
 
-    void addNotifier (int fd, QObject *o);
-
     bool isFitToScreen();
     bool isFullScreen ();
     bool isMaximized ();
@@ -31,7 +29,6 @@ private:
     Ui::MainWindow *ui;
     QApplication *rootApp;
     Udev *udev;
-    QList<struct udev_device *> inputDevices;
     QList<QDevice *> qDevices;
     QGraphicsScene *scene;
     QRect viewRect;
