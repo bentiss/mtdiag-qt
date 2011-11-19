@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form_Quirks</class>
+ <widget class="QWidget" name="Form_Quirks">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>458</width>
+    <height>513</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QDockWidget" name="dockWidget_quirks">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>20</y>
+     <width>401</width>
+     <height>441</height>
+    </rect>
+   </property>
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="windowTitle">
+    <string>Quirks</string>
+   </property>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QScrollArea" name="scrollArea">
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <widget class="QWidget" name="scrollAreaWidgetContents">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>363</width>
+          <height>400</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QGroupBox" name="groupBox_Valid">
+           <property name="title">
+            <string>Valid is...</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <widget class="QRadioButton" name="radioButton_NOT_SEEN_MEANS_UP">
+              <property name="text">
+               <string>Not Seen means Up</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_ALWAYS_VALID">
+              <property name="text">
+               <string>Always True</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_VALID_IS_INRANGE">
+              <property name="text">
+               <string>In Range</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_VALID_IS_CONFIDENCE">
+              <property name="text">
+               <string>Confidence</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_Slot">
+           <property name="title">
+            <string>Slot is...</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <widget class="QRadioButton" name="radioButton_calculated">
+              <property name="text">
+               <string>Computed from Contact Id</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_SLOT_IS_CONTACTID">
+              <property name="text">
+               <string>Contact Id</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_SLOT_IS_CONTACTNUMBER">
+              <property name="text">
+               <string>Contact Number</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_SLOT_IS_CONTACTID_MINUS_ONE">
+              <property name="text">
+               <string>Contact Id Minus One</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_CYPRESS">
+              <property name="text">
+               <string>Cypress specific</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_vendor">
+           <property name="title">
+            <string>Vendor specific</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="0" column="0">
+             <widget class="QCheckBox" name="checkBox_EGALAX_XYZ_FIXUP">
+              <property name="text">
+               <string>Egalax XY fixup</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>radioButton_NOT_SEEN_MEANS_UP</tabstop>
+  <tabstop>radioButton_ALWAYS_VALID</tabstop>
+  <tabstop>radioButton_VALID_IS_INRANGE</tabstop>
+  <tabstop>radioButton_VALID_IS_CONFIDENCE</tabstop>
+  <tabstop>radioButton_calculated</tabstop>
+  <tabstop>radioButton_SLOT_IS_CONTACTID</tabstop>
+  <tabstop>radioButton_SLOT_IS_CONTACTNUMBER</tabstop>
+  <tabstop>radioButton_SLOT_IS_CONTACTID_MINUS_ONE</tabstop>
+  <tabstop>radioButton_CYPRESS</tabstop>
+  <tabstop>checkBox_EGALAX_XYZ_FIXUP</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>radioButton_calculated</sender>
+   <signal>clicked()</signal>
+   <receiver>Form_Quirks</receiver>
+   <slot>updateQuirks()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>139</x>
+     <y>258</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>33</x>
+     <y>451</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_SLOT_IS_CONTACTID</sender>
+   <signal>clicked()</signal>
+   <receiver>Form_Quirks</receiver>
+   <slot>updateQuirks()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>153</x>
+     <y>286</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>62</x>
+     <y>468</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_SLOT_IS_CONTACTNUMBER</sender>
+   <signal>clicked()</signal>
+   <receiver>Form_Quirks</receiver>
+   <slot>updateQuirks()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>117</x>
+     <y>314</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>89</x>
+     <y>476</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_SLOT_IS_CONTACTID_MINUS_ONE</sender>
+   <signal>clicked()</signal>
+   <receiver>Form_Quirks</receiver>
+   <slot>updateQuirks()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>99</x>
+     <y>342</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>131</x>
+     <y>483</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_VALID_IS_CONFIDENCE</sender>
+   <signal>clicked()</signal>
+   <receiver>Form_Quirks</receiver>
+   <slot>updateQuirks()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>130</x>
+     <y>194</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>209</x>
+     <y>461</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_VALID_IS_INRANGE</sender>
+   <signal>clicked()</signal>
+   <receiver>Form_Quirks</receiver>
+   <slot>updateQuirks()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>111</x>
+     <y>166</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>169</x>
+     <y>454</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_ALWAYS_VALID</sender>
+   <signal>clicked()</signal>
+   <receiver>Form_Quirks</receiver>
+   <slot>updateQuirks()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>85</x>
+     <y>138</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>22</x>
+     <y>198</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_NOT_SEEN_MEANS_UP</sender>
+   <signal>clicked()</signal>
+   <receiver>Form_Quirks</receiver>
+   <slot>updateQuirks()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>87</x>
+     <y>110</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>10</x>
+     <y>163</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_CYPRESS</sender>
+   <signal>clicked()</signal>
+   <receiver>Form_Quirks</receiver>
+   <slot>updateQuirks()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>81</x>
+     <y>355</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>307</x>
+     <y>484</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_EGALAX_XYZ_FIXUP</sender>
+   <signal>clicked()</signal>
+   <receiver>Form_Quirks</receiver>
+   <slot>updateQuirks()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>76</x>
+     <y>423</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>427</x>
+     <y>459</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>updateQuirks()</slot>
+ </slots>
+</ui>
