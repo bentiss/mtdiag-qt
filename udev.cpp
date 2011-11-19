@@ -27,10 +27,6 @@ Udev::~Udev()
     udev_monitor_unref(mon);
 }
 
-static void cleanUdevDevices (struct udev *udev, const char *subsystem)
-{
-}
-
 int Udev::getFd ()
 {
     return udev_monitor_get_fd(mon);
