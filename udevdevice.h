@@ -1,6 +1,5 @@
 #ifndef UDEVDEVICE_H
 #define UDEVDEVICE_H
-#include <QHash>
 
 struct udev;
 struct udev_device;
@@ -8,6 +7,10 @@ struct udev_device;
 class UdevDevice
 {
 public:
+    UdevDevice(struct udev_device *device);
+    UdevDevice(struct udev *udev, const char *path);
+    ~UdevDevice();
+
     const char *getDevpath();
     const char *getSubsystem();
     const char *getDevtype();
@@ -31,17 +34,8 @@ public:
     UdevDevice *getParentWithSubsystemDevtype(const char *subsystem,
                                               const char *devtype);
 
-    static UdevDevice *getDevice (struct udev_device *device);
-
-    static UdevDevice *getDevice (struct udev *udev, const char *path);
-
-    static void cleanDevicesList (struct udev *udev);
 private:
-    UdevDevice(struct udev_device *device);
-    struct udev *udev();
-
     struct udev_device *device;
-    static QHash<struct udev_device *, UdevDevice *> devices;
 };
 
 #endif // UDEVDEVICE_H

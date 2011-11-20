@@ -22,7 +22,6 @@ Udev::Udev(QObject *parent) :
 
 Udev::~Udev()
 {
-    UdevDevice::cleanDevicesList(udev);
     udev_unref(udev);
     udev_monitor_unref(mon);
 }
@@ -34,7 +33,7 @@ int Udev::getFd ()
 
 UdevDevice *Udev::event ()
 {
-    return UdevDevice::getDevice(udev_monitor_receive_device(mon));
+    return new UdevDevice(udev_monitor_receive_device(mon));
 }
 
 QHash<QString, QString> Udev::getFloatingHidUsbDevices()
@@ -59,12 +58,12 @@ QHash<QString, QString> Udev::getFloatingHidUsbDevices()
         /* Get the filename of the /sys entry for the device
            and create a udev_device object (dev) representing it */
         path = udev_list_entry_get_name(dev_list_entry);
-        dev = UdevDevice::getDevice(udev, path);
+        dev = new UdevDevice(udev, path);
 
         /* usb_device_get_devnode() returns the path to the device node
            itself in /dev. */
         if (dev->getDriver()) {
-            //udev_device_unref(dev);
+            delete dev;
             continue;
         }
 
@@ -113,15 +112,20 @@ QList<UdevDevice *> Udev::getInputDevices()
         /* Get the filename of the /sys entry for the device
            and create a udev_device object (dev) representing it */
         path = udev_list_entry_get_name(dev_list_entry);
-        dev = UdevDevice::getDevice(udev, path);
+        dev = new UdevDevice(udev, path);
 
-        if (!dev->getDevnode())
+        if (!dev->getDevnode()) {
+            delete dev;
             continue;
+        }
 
         sysName = dev->getSysname();
         if (sysName.startsWith("event"))
             inputDevices.append(dev);
+        else
+            delete dev;
     }
+    udev_enumerate_unref(enumerate);
     return inputDevices;
 }
 
@@ -147,6 +151,7 @@ UdevDevice *Udev::getHid(UdevDevice *device)
        a loop. The loop will be executed for each member in
        devices, setting dev_list_entry to a list entry
        which contains the device's path in /sys. */
+
     udev_list_entry_foreach(dev_list_entry, devices) {
         UdevDevice *dev;
         const char *path;
@@ -154,13 +159,16 @@ UdevDevice *Udev::getHid(UdevDevice *device)
         /* Get the filename of the /sys entry for the device
            and create a udev_device object (dev) representing it */
         path = udev_list_entry_get_name(dev_list_entry);
-        dev = UdevDevice::getDevice(udev, path);
+        dev = new UdevDevice(udev, path);
 
         sysName = dev->getSysname();
         if (sysName.contains(magic)) {
             retValue = dev;
             break;
         }
+        delete dev;
     }
+    delete parent;
+    udev_enumerate_unref(enumerate);
     return retValue;
 }

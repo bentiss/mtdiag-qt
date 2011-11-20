@@ -21,8 +21,10 @@ MainWindow::MainWindow(QApplication *rootApp, QWidget *parent) :
 
     QList<UdevDevice *> inputDevices = udev->getInputDevices();
 
-    for (int i = 0; i < inputDevices.count(); ++i)
+    for (int i = 0; i < inputDevices.count(); ++i) {
         addDevice(inputDevices[i]);
+        delete inputDevices[i];
+    }
 
     sn = new QSocketNotifier(udev->getFd(), QSocketNotifier::Read, this);
     QObject::connect(sn, SIGNAL(activated(int)), this, SLOT(udevEvent(int)));
@@ -30,6 +32,7 @@ MainWindow::MainWindow(QApplication *rootApp, QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    delete ui;
     delete sn;
     delete scene;
     delete udev;
@@ -161,8 +164,10 @@ void MainWindow::udevEvent(int fd)
 
     device = udev->event();
 
-    if (!QString(device->getSysname()).startsWith("event"))
+    if (!QString(device->getSysname()).startsWith("event")) {
+        delete device;
         return;
+    }
 
     action = device->getAction();
 
@@ -170,6 +175,7 @@ void MainWindow::udevEvent(int fd)
         addDevice(device);
     else if (action == "remove")
         removeDevice(device);
+    delete device;
 }
 
 /*

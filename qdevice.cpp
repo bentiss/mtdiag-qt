@@ -66,6 +66,7 @@ QDevice::QDevice(KernelDevice *kernelDevice,
 
 QDevice::~QDevice ()
 {
+    delete hid;
     delete kernelDevice;
     delete form;
     delete formQuirks;
