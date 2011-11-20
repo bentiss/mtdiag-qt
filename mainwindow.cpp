@@ -75,6 +75,8 @@ void MainWindow::addDevice (UdevDevice *device)
     qDev = new QDevice (kernelDevice, hid, scene, &viewRect, this);
     ui->tabWidgetInputDevices->addTab(qDev, kernelDevice->getName());
     qDevices.append(qDev);
+    connect(ui->actionExpert_Mode, SIGNAL(toggled(bool)),
+            qDev, SLOT(expertMode(bool)));
 }
 
 void MainWindow::removeDevice (UdevDevice *device)

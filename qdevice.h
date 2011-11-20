@@ -54,6 +54,7 @@ public slots:
     void fdReady (int fd);
     void colorClicked ();
     void updateQuirks ();
+    void expertMode (bool value);
 };
 
 #endif // QDEVICE_H

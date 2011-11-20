@@ -174,3 +174,14 @@ void QDevice::updateQuirks ()
 {
 
 }
+
+void QDevice::expertMode (bool value)
+{
+    if (!formQuirks)
+        return;
+
+    formQuirks->groupBox_Slot->setEnabled(value);
+    formQuirks->groupBox_Valid->setEnabled(value);
+    formQuirks->groupBox_vendor->setEnabled(value);
+
+}
