@@ -24,7 +24,7 @@ QDevice::QDevice(KernelDevice *kernelDevice,
                  QWidget *parent) :
     QWidget(parent),
     form(new Ui::Form_Input),
-    formQuirks(new Ui::Form_Quirks),
+    formQuirks(0),
     kernelDevice(kernelDevice),
     hid(hid),
     scene(scene),
@@ -51,10 +51,11 @@ QDevice::QDevice(KernelDevice *kernelDevice,
         form->lineEdit_driver->setEnabled(false);
     form->lineEdit_node->setText(kernelDevice->getPath());
 
-    //if (QString("hid-multitouch") == udev_device_get_driver(hid)) {
+    if (hid && QString("hid-multitouch") == hid->getDriver()) {
+        formQuirks = new Ui::Form_Quirks();
         formQuirks->setupUi(this);
         splitter->addWidget(formQuirks->dockWidget_quirks);
-    //}
+    }
 
     kernelDevice->setProcessEventArgs(&staticProcessEvent, this);
     sn = new QSocketNotifier(fd, QSocketNotifier::Read, this);
@@ -69,7 +70,8 @@ QDevice::~QDevice ()
     delete hid;
     delete kernelDevice;
     delete form;
-    delete formQuirks;
+    if (formQuirks)
+        delete formQuirks;
     for (int i = 0; i < brushes.count(); ++i) {
         delete brushes[i];
     }
