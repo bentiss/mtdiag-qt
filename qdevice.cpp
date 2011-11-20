@@ -102,10 +102,7 @@ void QDevice::processEvent (struct input_event *ev)
     } else if (ev->type == EV_SYN && ev->code == SYN_REPORT) {
         QList<int> keys = touches.keys();
         for (int i = 0; i < keys.count(); ++i) {
-            if (!touches[keys[i]]->update ()) {
-                delete touches[keys[i]];
-                touches.remove(keys[i]);
-            }
+            touches[keys[i]]->update ();
         }
     }
 

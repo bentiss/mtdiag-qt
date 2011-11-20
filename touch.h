@@ -11,7 +11,8 @@ class Touch : public QObject
     Q_OBJECT
 public:
     explicit Touch(QGraphicsScene *scene, QBrush *brush,QObject *parent = 0);
-    bool update();
+    ~Touch();
+    void update();
     void setCx(int newCx) {cx = newCx;}
     void setCy(int newCy) {cy = newCy;}
     void setTrackingId(int newTrackingId) {trackingId = newTrackingId;}

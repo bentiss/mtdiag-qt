@@ -12,26 +12,25 @@ Touch::Touch(QGraphicsScene *scene, QBrush *brush, QObject *parent) :
 {
 }
 
-bool Touch::update()
+void Touch::update()
 {
+    if (ellipse)
+        ellipse->setVisible(trackingId >= 0);
+    else
+        ellipse = scene->addEllipse(QRectF(cx - radius, cy - radius,
+                                           2 * radius, 2 * radius),
+                                    QPen(),
+                                    *brush);
     if (trackingId >= 0) {
-        if (ellipse) {
-            QRectF rect = ellipse->rect();
-            rect.moveCenter(QPointF(cx, cy));
-            ellipse->setRect(rect);
-        } else {
-            ellipse = scene->addEllipse(QRectF(cx - radius, cy - radius,
-                                               2 * radius, 2 * radius),
-                                        QPen(),
-                                        *brush);
-        }
-    } else {
-        if (ellipse) {
-            scene->removeItem(ellipse);
-            delete ellipse;
-            ellipse = 0;
-        }
-        return false;
-    }
-    return true;
+        QRectF rect = ellipse->rect();
+        rect.moveCenter(QPointF(cx, cy));
+        ellipse->setRect(rect);
+        ellipse->show();
+   }
+}
+
+Touch::~Touch()
+{
+    scene->removeItem(ellipse);
+    delete ellipse;
 }
