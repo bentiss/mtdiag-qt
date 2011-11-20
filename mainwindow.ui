@@ -156,19 +156,9 @@
     </layout>
    </widget>
   </widget>
-  <action name="actionPlop">
-   <property name="text">
-    <string>plop</string>
-   </property>
-  </action>
   <action name="actionFrom_VID_PID">
    <property name="text">
     <string>From VID:PID</string>
-   </property>
-  </action>
-  <action name="actionPlop_2">
-   <property name="text">
-    <string>plop</string>
    </property>
   </action>
   <action name="actionExpert_Mode">
