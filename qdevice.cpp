@@ -180,8 +180,9 @@ void QDevice::expertMode (bool value)
     if (!formQuirks)
         return;
 
-    formQuirks->groupBox_Slot->setEnabled(value);
-    formQuirks->groupBox_Valid->setEnabled(value);
-    formQuirks->groupBox_vendor->setEnabled(value);
+    if (!value)
+        formQuirks->dockWidget_quirks->hide();
+    else
+        formQuirks->dockWidget_quirks->show();
 
 }
