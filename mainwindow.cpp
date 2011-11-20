@@ -73,6 +73,7 @@ void MainWindow::addDevice (UdevDevice *device)
     hid = udev->getHid(device);
 
     qDev = new QDevice (kernelDevice, hid, scene, &viewRect, this);
+    qDev->expertMode(ui->actionExpert_Mode->isChecked());
     ui->tabWidgetInputDevices->addTab(qDev, kernelDevice->getName());
     qDevices.append(qDev);
     connect(ui->actionExpert_Mode, SIGNAL(toggled(bool)),
