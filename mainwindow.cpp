@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QDebug>
 #include <QDesktopWidget>
 #include "kernelDevice.h"
 
@@ -14,10 +13,14 @@ MainWindow::MainWindow(QApplication *rootApp, QWidget *parent) :
     rootApp(rootApp),
     udev(new Udev()),
     qDevices(QList<QDevice *>()),
-    scene(new QGraphicsScene ())
+    scene(new QGraphicsScene ()),
+    xi2manager(new XI2Manager(x11::XOpenDisplay(NULL)))
 {
     ui->setupUi(this);
     ui->graphicsView->setScene(scene);
+
+    if (rootApp)
+        rootApp->installEventFilter(this);
 
     QList<UdevDevice *> inputDevices = udev->getInputDevices();
 
@@ -59,7 +62,6 @@ void MainWindow::addDevice (UdevDevice *device)
     UdevDevice *hid;
     QDevice *qDev;
 
-
     kernelDevice = new KernelDevice (device->getDevnode());
 
     if (!kernelDevice->init())
@@ -78,6 +80,8 @@ void MainWindow::addDevice (UdevDevice *device)
     qDevices.append(qDev);
     connect(ui->actionExpert_Mode, SIGNAL(toggled(bool)),
             qDev, SLOT(expertMode(bool)));
+
+    xi2manager->appendXI2Devices(kernelDevice->getName());
 }
 
 void MainWindow::removeDevice (UdevDevice *device)
@@ -122,10 +126,10 @@ void MainWindow::fullscreen (bool value)
 
 void MainWindow::disableX11 (bool value)
 {
-    /*if value:
-            self.deactivate_xinput ()
-    else:
-            self.activate_xinput ()*/
+    if (value)
+            xi2manager->dettachDevices();
+    else
+            xi2manager->reattachDevices();
 }
 
 void MainWindow::setupDisplayView ()
@@ -181,6 +185,21 @@ void MainWindow::udevEvent(int fd)
     delete device;
 }
 
+bool MainWindow::eventFilter(QObject *object, QEvent *event)
+{
+    if (object != rootApp || (
+                event->type() != QEvent::ApplicationActivated &&
+                event->type() != QEvent::ApplicationDeactivated))
+        return QMainWindow::eventFilter(object, event);
+
+    if (event->type() == QEvent::ApplicationActivated &&
+            ui->commandLinkButton_disableX11->isChecked())
+        xi2manager->dettachDevices();
+    else
+        xi2manager->reattachDevices();
+    return true;
+}
+
 /*
 def __init__(self, qApp):
         QtGui.QMainWindow.__init__(self)
@@ -211,17 +230,6 @@ def __init__(self, qApp):
                 self.actions.append(VidPidAction (vidpid, devices, self))
         self.addNotifier(self.udev.fileno, self.udev_event)
 
-def eventFilter(self, watched, event):
-        if self.qApp != watched or (
-                event.type() != QtCore.QEvent.ApplicationActivated and
-                event.type() != QtCore.QEvent.ApplicationDeactivated):
-                return QtGui.QMainWindow.eventFilter (self, watched, event)
-
-        if event.type() == QtCore.QEvent.ApplicationActivated:
-                self.deactivate_xinput()
-        elif event.type() == QtCore.QEvent.ApplicationDeactivated:
-                self.activate_xinput()
-        return True
 
 
 def disableX11(self, value):

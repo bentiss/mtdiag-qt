@@ -9,7 +9,7 @@ QT       += core gui
 TARGET = mtdiag-qt
 TEMPLATE = app
 
-LIBS += -ludev
+LIBS += -ludev -lX11 -lXi
 INCLUDEPATH += /media/data/Src/Kernel/all/include/
 
 SOURCES += main.cpp\
@@ -19,7 +19,9 @@ SOURCES += main.cpp\
     touch.cpp \
     colorwidget.cpp \
     kernelDevice.cpp \
-    udevdevice.cpp
+    udevdevice.cpp \
+    xi2manager.cpp \
+    xi2device.cpp
 
 HEADERS  += mainwindow.h \
     udev.h \
@@ -27,7 +29,9 @@ HEADERS  += mainwindow.h \
     touch.h \
     colorwidget.h \
     kernelDevice.h \
-    udevdevice.h
+    udevdevice.h \
+    xi2manager.h \
+    xi2device.h
 
 FORMS    += mainwindow.ui \
     quirks.ui \

@@ -1,11 +1,16 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QtCore>
+#include <QtGui>
 #include <QMainWindow>
+#include <QEvent>
 #include <QGraphicsScene>
 #include <QSocketNotifier>
+#include <QDebug>
 #include "udev.h"
 #include "qdevice.h"
+#include "xi2manager.h"
 
 namespace Ui {
     class MainWindow;
@@ -33,6 +38,7 @@ private:
     QGraphicsScene *scene;
     QRect viewRect;
     QSocketNotifier *sn;
+    XI2Manager *xi2manager;
 
     void addDevice (UdevDevice *device);
     void removeDevice (UdevDevice *device);
@@ -40,6 +46,7 @@ private:
 protected:
     void resizeEvent(QResizeEvent *event);
     void moveEvent(QMoveEvent *event);
+    bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
     void fullscreen (bool value);
