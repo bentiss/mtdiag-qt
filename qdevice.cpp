@@ -104,7 +104,8 @@ void QDevice::processEvent (struct input_event *ev)
     } else if (ev->type == EV_SYN && ev->code == SYN_REPORT) {
         QList<int> keys = touches.keys();
         for (int i = 0; i < keys.count(); ++i) {
-            touches[keys[i]]->update ();
+            if (touches[keys[i]]->update (currentBrush))
+                currentBrush = nextBrush();
         }
     }
 
@@ -131,6 +132,14 @@ float QDevice::getCoord (float value, float min, float max)
     return (value - min) / (max - min);
 }
 
+QBrush *QDevice::nextBrush()
+{
+    QBrush *brush = brushes[0];
+    brushes.pop_front();
+    brushes.append(brush);
+    return brush;
+}
+
 Touch *QDevice::getCurrentTouch ()
 {
     bool ok;
@@ -138,10 +147,7 @@ Touch *QDevice::getCurrentTouch ()
     /* no need to test ok */
 
     if (!touches.contains(slot)) {
-        QBrush *brush = brushes[0];
-        brushes.pop_front();
-        brushes.append(brush);
-        touches[slot] = new Touch (scene, brush);
+        touches[slot] = new Touch (scene);
     }
     return touches[slot];
 }
@@ -157,6 +163,7 @@ void QDevice::createBrushes ()
         QColor color = refColor.lighter (i);
         brushes.append(new QBrush(color));
     }
+    currentBrush = nextBrush();
 }
 
 void QDevice::colorClicked ()

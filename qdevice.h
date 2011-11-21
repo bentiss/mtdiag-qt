@@ -47,6 +47,9 @@ private:
     QColor refColor;
     QGridLayout *gridLayout;
     QSplitter *splitter;
+    QBrush *currentBrush;
+
+    QBrush *nextBrush();
 
 signals:
 

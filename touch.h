@@ -10,16 +10,15 @@ class Touch : public QObject
 {
     Q_OBJECT
 public:
-    explicit Touch(QGraphicsScene *scene, QBrush *brush,QObject *parent = 0);
+    explicit Touch(QGraphicsScene *scene, QObject *parent = 0);
     ~Touch();
-    void update();
+    bool update(QBrush *color);
     void setCx(int newCx) {cx = newCx;}
     void setCy(int newCy) {cy = newCy;}
     void setTrackingId(int newTrackingId) {trackingId = newTrackingId;}
 
 private:
     QGraphicsScene *scene;
-    QBrush *brush;
     QGraphicsEllipseItem *ellipse;
     int radius;
     int trackingId;
