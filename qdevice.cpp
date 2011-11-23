@@ -75,6 +75,10 @@ QDevice::~QDevice ()
     for (int i = 0; i < brushes.count(); ++i) {
         delete brushes[i];
     }
+    foreach (Touch *touch, touches)
+        delete touch;
+    foreach (QBrush *brush, brushes)
+        delete brush;
 }
 
 void QDevice::processEvent (struct input_event *ev)

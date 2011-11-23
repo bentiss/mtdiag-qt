@@ -37,8 +37,10 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete sn;
-    delete scene;
     delete udev;
+    foreach (QDevice *dev, qDevices)
+        delete dev;
+    delete scene;
     delete xi2manager;
 }
 
