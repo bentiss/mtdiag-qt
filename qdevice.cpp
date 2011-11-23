@@ -1,6 +1,5 @@
 #include "qdevice.h"
 #include "ui_input.h"
-#include "ui_quirks.h"
 #include "mainwindow.h"
 #include <QDebug>
 #include <QSocketNotifier>
@@ -24,7 +23,7 @@ QDevice::QDevice(KernelDevice *kernelDevice,
                  QWidget *parent) :
     QWidget(parent),
     form(new Ui::Form_Input),
-    formQuirks(0),
+    hid_multitouch(0),
     kernelDevice(kernelDevice),
     hid(hid),
     scene(scene),
@@ -51,11 +50,8 @@ QDevice::QDevice(KernelDevice *kernelDevice,
         form->lineEdit_driver->setEnabled(false);
     form->lineEdit_node->setText(kernelDevice->getPath());
 
-    if (hid && QString("hid-multitouch") == hid->getDriver()) {
-        formQuirks = new Ui::Form_Quirks();
-        formQuirks->setupUi(this);
-        splitter->addWidget(formQuirks->dockWidget_quirks);
-    }
+    if (hid && QString("hid-multitouch") == hid->getDriver())
+        hid_multitouch = new HidMT(hid, this->splitter);
 
     kernelDevice->setProcessEventArgs(&staticProcessEvent, this);
     sn = new QSocketNotifier(fd, QSocketNotifier::Read, this);
@@ -70,11 +66,8 @@ QDevice::~QDevice ()
     delete hid;
     delete kernelDevice;
     delete form;
-    if (formQuirks)
-        delete formQuirks;
-    for (int i = 0; i < brushes.count(); ++i) {
-        delete brushes[i];
-    }
+    if (hid_multitouch)
+        delete hid_multitouch;
     foreach (Touch *touch, touches)
         delete touch;
     foreach (QBrush *brush, brushes)
@@ -180,19 +173,10 @@ void QDevice::colorClicked ()
     createBrushes();
 }
 
-void QDevice::updateQuirks ()
-{
-
-}
-
 void QDevice::expertMode (bool value)
 {
-    if (!formQuirks)
+    if (!hid_multitouch)
         return;
 
-    if (!value)
-        formQuirks->dockWidget_quirks->hide();
-    else
-        formQuirks->dockWidget_quirks->show();
-
+    hid_multitouch->expertMode(value);
 }

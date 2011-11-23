@@ -9,10 +9,10 @@
 #include "udev.h"
 #include "touch.h"
 #include "kernelDevice.h"
+#include "hidmt.h"
 
 namespace Ui {
 class Form_Input;
-class Form_Quirks;
 }
 
 class QDevice : public QWidget
@@ -37,9 +37,9 @@ public:
 
 private:
     Ui::Form_Input *form;
-    Ui::Form_Quirks *formQuirks;
     KernelDevice *kernelDevice;
     UdevDevice *hid;
+    HidMT *hid_multitouch;
     QGraphicsScene *scene;
     QRect *sizeWindow;
     QHash <int, Touch *> touches;
@@ -56,7 +56,6 @@ signals:
 public slots:
     void fdReady (int fd);
     void colorClicked ();
-    void updateQuirks ();
     void expertMode (bool value);
 };
 
