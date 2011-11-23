@@ -22,7 +22,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="1" column="1" colspan="4">
-     <widget class="QGraphicsView" name="graphicsView">
+     <widget class="GraphicsView" name="graphicsView">
       <property name="enabled">
        <bool>false</bool>
       </property>
@@ -173,6 +173,17 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GraphicsView</class>
+   <extends>QGraphicsView</extends>
+   <header>graphicsview.h</header>
+   <slots>
+    <slot>setFullscreen(bool)</slot>
+    <slot>setFitToScreen(bool)</slot>
+   </slots>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>commandLinkButton_disableX11</tabstop>
   <tabstop>tabWidgetInputDevices</tabstop>
@@ -191,40 +202,56 @@
      <y>46</y>
     </hint>
     <hint type="destinationlabel">
-     <x>616</x>
-     <y>49</y>
+     <x>458</x>
+     <y>260</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>commandLinkButton_fullscreen</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>fullscreen(bool)</slot>
+   <signal>clicked(bool)</signal>
+   <receiver>graphicsView</receiver>
+   <slot>setFullscreen(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>576</x>
-     <y>64</y>
+     <x>621</x>
+     <y>51</y>
     </hint>
     <hint type="destinationlabel">
-     <x>776</x>
-     <y>48</y>
+     <x>635</x>
+     <y>140</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>commandLinkButton_fit_to_screen</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>setupDisplayView()</slot>
+   <signal>clicked(bool)</signal>
+   <receiver>graphicsView</receiver>
+   <slot>setFitToScreen(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>759</x>
-     <y>65</y>
+     <x>774</x>
+     <y>36</y>
     </hint>
     <hint type="destinationlabel">
-     <x>900</x>
-     <y>46</y>
+     <x>770</x>
+     <y>110</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>commandLinkButton_fullscreen</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fullscreen(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>584</x>
+     <y>48</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>30</y>
     </hint>
    </hints>
   </connection>

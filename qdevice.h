@@ -10,6 +10,7 @@
 #include "touch.h"
 #include "kernelDevice.h"
 #include "hidmt.h"
+#include "graphicsview.h"
 
 namespace Ui {
 class Form_Input;
@@ -21,8 +22,7 @@ class QDevice : public QWidget
 public:
     explicit QDevice(KernelDevice *kernelDevice,
                      UdevDevice *hid,
-                     QGraphicsScene *scene,
-                     QRect *sizeWindow,
+                     GraphicsView *view,
                      QWidget *parent = 0);
     ~QDevice ();
 
@@ -40,8 +40,7 @@ private:
     KernelDevice *kernelDevice;
     UdevDevice *hid;
     HidMT *hid_multitouch;
-    QGraphicsScene *scene;
-    QRect *sizeWindow;
+    GraphicsView *view;
     QHash <int, Touch *> touches;
     QList <QBrush *> brushes;
     QColor refColor;

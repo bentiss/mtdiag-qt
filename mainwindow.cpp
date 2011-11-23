@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QDesktopWidget>
 #include "kernelDevice.h"
 
 extern "C" {
@@ -13,11 +12,10 @@ MainWindow::MainWindow(QApplication *rootApp, QWidget *parent) :
     rootApp(rootApp),
     udev(new Udev()),
     qDevices(QList<QDevice *>()),
-    scene(new QGraphicsScene ()),
     xi2manager(new XI2Manager(x11::XOpenDisplay(NULL)))
 {
     ui->setupUi(this);
-    ui->graphicsView->setScene(scene);
+    ui->graphicsView->setFitToScreen(ui->commandLinkButton_fit_to_screen->isChecked());
 
     if (rootApp)
         rootApp->installEventFilter(this);
@@ -40,7 +38,6 @@ MainWindow::~MainWindow()
     delete udev;
     foreach (QDevice *dev, qDevices)
         delete dev;
-    delete scene;
     delete xi2manager;
 }
 
@@ -77,7 +74,7 @@ void MainWindow::addDevice (UdevDevice *device)
 
     hid = udev->getHid(device);
 
-    qDev = new QDevice (kernelDevice, hid, scene, &viewRect, this);
+    qDev = new QDevice (kernelDevice, hid, ui->graphicsView, this);
     qDev->expertMode(ui->actionExpert_Mode->isChecked());
     ui->tabWidgetInputDevices->addTab(qDev, kernelDevice->getName());
     qDevices.append(qDev);
@@ -111,14 +108,9 @@ void MainWindow::removeDevice (UdevDevice *device)
     delete matchedQDev;
 }
 
-void MainWindow::resizeEvent(QResizeEvent *event)
-{
-    setupDisplayView ();
-}
-
 void MainWindow::moveEvent(QMoveEvent *event)
 {
-    setupDisplayView ();
+    ui->graphicsView->moveEvent();
 }
 
 void MainWindow::fullscreen (bool value)
@@ -135,36 +127,6 @@ void MainWindow::disableX11 (bool value)
             xi2manager->dettachDevices();
     else
             xi2manager->reattachDevices();
-}
-
-void MainWindow::setupDisplayView ()
-{
-    int x = 0;
-    int y = 0;
-
-    if (isFitToScreen()) {
-        QDesktopWidget *desktop = rootApp->desktop();
-        QRect screen_geom = desktop->screenGeometry(ui->graphicsView);
-        viewRect = screen_geom;
-        x += ui->graphicsView->x() + ui->centralwidget->x();
-        y += ui->graphicsView->y() + ui->centralwidget->y();
-        if (!isFullScreen() && !isMaximized()) {
-            x += geometry().x();
-            y += geometry().y();
-            x -= screen_geom.x();
-            y -= screen_geom.y();
-        }
-        if (isMaximized()) {
-            int dx = (viewRect.width() - width()) / 2;
-            int dy = (viewRect.height() - height());
-            x += dx;
-            y += dy;
-        }
-    } else {
-        viewRect = ui->graphicsView->rect();
-    }
-    viewRect.moveTo(x, y);
-    ui->graphicsView->setSceneRect(viewRect);
 }
 
 void MainWindow::udevEvent(int fd)
@@ -192,16 +154,25 @@ void MainWindow::udevEvent(int fd)
 
 bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
-    if (object != rootApp || (
-                event->type() != QEvent::ApplicationActivated &&
-                event->type() != QEvent::ApplicationDeactivated))
+    if (object != rootApp && object != this)
         return QMainWindow::eventFilter(object, event);
 
-    if (event->type() == QEvent::ApplicationActivated &&
-            ui->commandLinkButton_disableX11->isChecked())
-        xi2manager->dettachDevices();
-    else
+    if (event->type() != QEvent::ApplicationActivated &&
+            event->type() != QEvent::ApplicationDeactivated)
+        return QMainWindow::eventFilter(object, event);
+
+    switch (event->type()) {
+    case QEvent::ApplicationActivated:
+        if (ui->commandLinkButton_disableX11->isChecked())
+            xi2manager->dettachDevices();
+        break;
+    case QEvent::ApplicationDeactivated:
         xi2manager->reattachDevices();
+        break;
+    default:
+        qDebug() << QString("event not treated (%1)").arg(event->type());
+    }
+
     return true;
 }
 

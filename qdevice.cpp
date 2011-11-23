@@ -18,16 +18,14 @@ static void staticProcessEvent (struct input_event *ev, void *args)
 
 QDevice::QDevice(KernelDevice *kernelDevice,
                  UdevDevice *hid,
-                 QGraphicsScene *scene,
-                 QRect *sizeWindow,
+                 GraphicsView* view,
                  QWidget *parent) :
     QWidget(parent),
     form(new Ui::Form_Input),
     hid_multitouch(0),
     kernelDevice(kernelDevice),
     hid(hid),
-    scene(scene),
-    sizeWindow(sizeWindow)
+    view(view)
 {
     int fd = kernelDevice->getFileDescriptor();
     int hue;
@@ -85,13 +83,13 @@ void QDevice::processEvent (struct input_event *ev)
             touch = getCurrentTouch();
             touch->setCx(getCoord (ev->value,
                                    absinfo->minimum,
-                                   absinfo->maximum) * sizeWindow->width());
+                                   absinfo->maximum) * view->viewWidth());
             break;
         case ABS_MT_POSITION_Y:
             touch = getCurrentTouch();
             touch->setCy(getCoord (ev->value,
                                    absinfo->minimum,
-                                   absinfo->maximum) * sizeWindow->height());
+                                   absinfo->maximum) * view->viewHeight());
             break;
         case ABS_MT_TRACKING_ID:
             touch = getCurrentTouch();
@@ -143,7 +141,7 @@ Touch *QDevice::getCurrentTouch ()
     /* no need to test ok */
 
     if (!touches.contains(slot)) {
-        touches[slot] = new Touch (scene);
+        touches[slot] = new Touch (view->getScene());
     }
     return touches[slot];
 }

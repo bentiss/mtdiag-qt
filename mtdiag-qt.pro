@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     udevdevice.cpp \
     xi2manager.cpp \
     xi2device.cpp \
-    hidmt.cpp
+    hidmt.cpp \
+    graphicsview.cpp
 
 HEADERS  += mainwindow.h \
     udev.h \
@@ -33,11 +34,14 @@ HEADERS  += mainwindow.h \
     udevdevice.h \
     xi2manager.h \
     xi2device.h \
-    hidmt.h
+    hidmt.h \
+    graphicsview.h
 
 FORMS    += mainwindow.ui \
     quirks.ui \
     input.ui
+
+
 
 
 

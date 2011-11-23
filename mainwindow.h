@@ -28,15 +28,11 @@ public:
     bool isFullScreen ();
     bool isMaximized ();
 
-    const QRect getViewRect () { return viewRect ; }
-
 private:
     Ui::MainWindow *ui;
     QApplication *rootApp;
     Udev *udev;
     QList<QDevice *> qDevices;
-    QGraphicsScene *scene;
-    QRect viewRect;
     QSocketNotifier *sn;
     XI2Manager *xi2manager;
 
@@ -44,14 +40,12 @@ private:
     void removeDevice (UdevDevice *device);
 
 protected:
-    void resizeEvent(QResizeEvent *event);
     void moveEvent(QMoveEvent *event);
     bool eventFilter(QObject *object, QEvent *event);
 
 public slots:
     void fullscreen (bool value);
     void disableX11 (bool value);
-    void setupDisplayView ();
     void udevEvent(int fd);
 
 };
