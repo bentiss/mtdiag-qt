@@ -1,4 +1,5 @@
 #include "colorwidget.h"
+#include <QMouseEvent>
 
 ColorWidget::ColorWidget(QWidget *parent) :
     QWidget(parent)
@@ -21,4 +22,10 @@ void ColorWidget::setColor(QColor color)
 void ColorWidget::mouseDoubleClickEvent (QMouseEvent *event)
 {
     doubleClicked();
+}
+
+void ColorWidget::mouseReleaseEvent (QMouseEvent *event)
+{
+    if (event->button() == 2)
+        doubleClicked();
 }

@@ -14,6 +14,7 @@ private:
 
 protected:
     void mouseDoubleClickEvent (QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
 
 signals:
     void doubleClicked();
