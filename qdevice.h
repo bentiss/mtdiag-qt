@@ -29,7 +29,6 @@ public:
     void createBrushes ();
     float getCoord (float value, float min, float max);
     Touch *getCurrentTouch ();
-    //void close ();
     QString getName ();
     QString getNode ();
 

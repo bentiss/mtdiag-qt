@@ -7,10 +7,6 @@ extern "C" {
 #include <linux/input.h>
 }
 
-//#ifndef ABS_MT_SLOT
-//#define ABS_MT_SLOT 0x2f
-//#endif
-
 #define LONG_BITS (sizeof(long) * 8)
 /* Number of longs needed to hold the given number of bits */
 #define NLONGS(x) (((x) + LONG_BITS - 1) / LONG_BITS)
