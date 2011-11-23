@@ -39,6 +39,7 @@ MainWindow::~MainWindow()
     delete sn;
     delete scene;
     delete udev;
+    delete xi2manager;
 }
 
 bool MainWindow::isFitToScreen()

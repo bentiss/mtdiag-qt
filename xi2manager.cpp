@@ -10,6 +10,15 @@ XI2Manager::XI2Manager(Display *dpy):
 {
 }
 
+XI2Manager::~XI2Manager()
+{
+    std::map<int,XI2Device *>::iterator it;
+
+    for(it = map.begin(); it != map.end(); it++) {
+        delete it->second;
+    }
+}
+
 void XI2Manager::appendXI2Devices(const char *c_name)
 {
     int n = 0;
