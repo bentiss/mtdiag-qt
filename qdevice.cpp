@@ -106,9 +106,8 @@ void QDevice::processEvent (struct input_event *ev)
             break;
         }
     } else if (ev->type == EV_SYN && ev->code == SYN_REPORT) {
-        QList<int> keys = touches.keys();
-        for (int i = 0; i < keys.count(); ++i) {
-            if (touches[keys[i]]->update (currentBrush))
+        foreach (Touch *touch, touches) {
+            if (touch->update (currentBrush))
                 currentBrush = nextBrush();
         }
     }
