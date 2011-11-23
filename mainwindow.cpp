@@ -85,6 +85,8 @@ void MainWindow::addDevice (UdevDevice *device)
             qDev, SLOT(expertMode(bool)));
 
     xi2manager->appendXI2Devices(kernelDevice->getName());
+    if (ui->commandLinkButton_disableX11->isChecked())
+        xi2manager->dettachDevices();
 }
 
 void MainWindow::removeDevice (UdevDevice *device)
