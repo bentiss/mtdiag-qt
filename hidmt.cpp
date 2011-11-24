@@ -42,10 +42,10 @@ HidMT::~HidMT()
 
 void HidMT::expertMode(bool value)
 {
-if (!value)
-    formQuirks->dockWidget_quirks->hide();
-else
-    formQuirks->dockWidget_quirks->show();
+    if (!value)
+        formQuirks->dockWidget_quirks->hide();
+    else
+        formQuirks->dockWidget_quirks->show();
 }
 
 void HidMT::readQuirks()
