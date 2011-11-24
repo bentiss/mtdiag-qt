@@ -16,7 +16,7 @@ public:
     ~Udev();
     int getFd ();
     UdevDevice *event ();
-    QHash<QString, QString> getFloatingHidUsbDevices();
+    QList<QString> getFloatingHidUsbDevices();
     QList<UdevDevice *> getInputDevices();
     UdevDevice *getHid(UdevDevice *device);
 

@@ -36,9 +36,9 @@ UdevDevice *Udev::event ()
     return new UdevDevice(udev_monitor_receive_device(mon));
 }
 
-QHash<QString, QString> Udev::getFloatingHidUsbDevices()
+QList<QString> Udev::getFloatingHidUsbDevices()
 {
-    QHash<QString, QString> floatingDevices;
+    QList<QString> floatingDevices;
     struct udev_enumerate *enumerate;
     struct udev_list_entry *devices, *dev_list_entry;
     UdevDevice *dev, *parent;
@@ -76,6 +76,7 @@ QHash<QString, QString> Udev::getFloatingHidUsbDevices()
         parent = dev->getParentWithSubsystemDevtype ("usb", "usb_device");
         if (!parent) {
                 qDebug() << "Unable to find parent usb device.\n";
+                delete dev;
                 continue;
         }
 
@@ -83,9 +84,16 @@ QHash<QString, QString> Udev::getFloatingHidUsbDevices()
         vidpid.append(":");
         vidpid.append(parent->getSysattrValue ("idProduct"));
 
-        floatingDevices[vidpid] = parent->getSysattrValue ("manufacturer");
-        floatingDevices[vidpid].append(" ");
-        floatingDevices[vidpid].append(parent->getSysattrValue ("product"));
+        vidpid = QString("%1:%2 - %3 %4");
+        vidpid = vidpid.arg(parent->getSysattrValue ("idVendor"));
+        vidpid = vidpid.arg(parent->getSysattrValue ("idProduct"));
+        vidpid = vidpid.arg(parent->getSysattrValue ("manufacturer"));
+        vidpid = vidpid.arg(parent->getSysattrValue ("product"));
+
+        if (!floatingDevices.contains(vidpid))
+            floatingDevices.append(vidpid);
+        delete parent;
+        delete dev;
     }
     return floatingDevices;
 }

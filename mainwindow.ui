@@ -107,7 +107,6 @@
      </property>
     </widget>
     <addaction name="menuOrphans_Usb_Hid"/>
-    <addaction name="actionFrom_VID_PID"/>
     <addaction name="actionExpert_Mode"/>
    </widget>
    <addaction name="menuAdd_unlisted_device"/>
@@ -156,11 +155,6 @@
     </layout>
    </widget>
   </widget>
-  <action name="actionFrom_VID_PID">
-   <property name="text">
-    <string>From VID:PID</string>
-   </property>
-  </action>
   <action name="actionExpert_Mode">
    <property name="checkable">
     <bool>true</bool>

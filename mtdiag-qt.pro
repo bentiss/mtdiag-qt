@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     xi2manager.cpp \
     xi2device.cpp \
     hidmt.cpp \
-    graphicsview.cpp
+    graphicsview.cpp \
+    vidpidaction.cpp
 
 HEADERS  += mainwindow.h \
     udev.h \
@@ -35,11 +36,14 @@ HEADERS  += mainwindow.h \
     xi2manager.h \
     xi2device.h \
     hidmt.h \
-    graphicsview.h
+    graphicsview.h \
+    vidpidaction.h
 
 FORMS    += mainwindow.ui \
     quirks.ui \
     input.ui
+
+
 
 
 

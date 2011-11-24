@@ -11,6 +11,7 @@
 #include "udev.h"
 #include "qdevice.h"
 #include "xi2manager.h"
+#include "vidpidaction.h"
 
 namespace Ui {
     class MainWindow;
@@ -35,6 +36,7 @@ private:
     QList<QDevice *> qDevices;
     QSocketNotifier *sn;
     XI2Manager *xi2manager;
+    QList<VidPidAction *> actions;
 
     void addDevice (UdevDevice *device);
     void removeDevice (UdevDevice *device);

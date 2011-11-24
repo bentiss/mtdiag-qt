@@ -12,7 +12,8 @@ MainWindow::MainWindow(QApplication *rootApp, QWidget *parent) :
     rootApp(rootApp),
     udev(new Udev()),
     qDevices(QList<QDevice *>()),
-    xi2manager(new XI2Manager(x11::XOpenDisplay(NULL)))
+    xi2manager(new XI2Manager(x11::XOpenDisplay(NULL))),
+    actions(QList<VidPidAction *>())
 {
     ui->setupUi(this);
     ui->graphicsView->setFitToScreen(ui->commandLinkButton_fit_to_screen->isChecked());
@@ -26,6 +27,18 @@ MainWindow::MainWindow(QApplication *rootApp, QWidget *parent) :
         addDevice(inputDevices[i]);
         delete inputDevices[i];
     }
+
+    QList<QString> floatingDevices = udev->getFloatingHidUsbDevices();
+    foreach(QString vidpid, floatingDevices) {
+        if (vidpid.contains("046d:c52b"))
+            continue;
+
+        VidPidAction *action = new VidPidAction(vidpid, this);
+        actions.append(action);
+        ui->menuOrphans_Usb_Hid->addAction(action);
+    }
+    if (actions.size() == 0)
+        ui->menuOrphans_Usb_Hid->setEnabled(false);
 
     sn = new QSocketNotifier(udev->getFd(), QSocketNotifier::Read, this);
     QObject::connect(sn, SIGNAL(activated(int)), this, SLOT(udevEvent(int)));
