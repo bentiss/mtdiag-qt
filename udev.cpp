@@ -95,6 +95,7 @@ QList<QString> Udev::getFloatingHidUsbDevices()
         delete parent;
         delete dev;
     }
+    udev_enumerate_unref(enumerate);
     return floatingDevices;
 }
 
