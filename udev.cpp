@@ -138,7 +138,49 @@ QList<UdevDevice *> Udev::getInputDevices()
     return inputDevices;
 }
 
-UdevDevice *Udev::getHid(UdevDevice *device)
+UdevDevice *Udev::getHiddev(UdevDevice *hidDevice)
+{
+    UdevDevice *parent;
+    struct udev_enumerate *enumerate;
+    struct udev_list_entry *devices, *dev_list_entry;
+    UdevDevice *retValue = 0;
+
+    parent = hidDevice->getParentWithSubsystemDevtype ("usb", "usb_device");
+
+    enumerate = udev_enumerate_new(udev);
+    udev_enumerate_add_match_subsystem(enumerate, "usb");
+    udev_enumerate_scan_devices(enumerate);
+    devices = udev_enumerate_get_list_entry(enumerate);
+
+    udev_list_entry_foreach(dev_list_entry, devices) {
+        UdevDevice *dev;
+        const char *path;
+        QString sysName;
+        /* Get the filename of the /sys entry for the device
+           and create a udev_device object (dev) representing it */
+        path = udev_list_entry_get_name(dev_list_entry);
+        dev = new UdevDevice(udev, path);
+
+        sysName = dev->getSysname();
+        if (sysName.contains("hiddev")) {
+            UdevDevice *hiddevParent;
+            hiddevParent = dev->getParentWithSubsystemDevtype ("usb",
+                                                               "usb_device");
+            if (QString(hiddevParent->getSyspath()) == parent->getSyspath() ) {
+                delete hiddevParent;
+                retValue = dev;
+                break;
+            }
+            delete hiddevParent;
+        }
+        delete dev;
+    }
+    delete parent;
+    udev_enumerate_unref(enumerate);
+    return retValue;
+}
+
+UdevDevice * Udev::getHid(UdevDevice *device)
 {
     UdevDevice *parent = device->getParent();
     QString product = parent->getPropertyValue("PRODUCT");

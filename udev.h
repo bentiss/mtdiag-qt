@@ -19,6 +19,7 @@ public:
     QList<QString> getFloatingHidUsbDevices();
     QList<UdevDevice *> getInputDevices();
     UdevDevice *getHid(UdevDevice *device);
+    UdevDevice *getHiddev(UdevDevice *hidDevice);
 
 private:
     struct udev *udev;
