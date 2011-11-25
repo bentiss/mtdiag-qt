@@ -13,169 +13,173 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_3">
-   <item row="0" column="0">
-    <widget class="QDockWidget" name="dockWidget_quirks">
-     <property name="features">
-      <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
-     </property>
-     <property name="windowTitle">
-      <string>Quirks</string>
-     </property>
-     <widget class="QWidget" name="dockWidgetContents_2">
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QScrollArea" name="scrollArea">
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>268</width>
-            <height>464</height>
-           </rect>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_3">
-           <item>
-            <widget class="QGroupBox" name="groupBox_Valid">
-             <property name="title">
-              <string>Valid is...</string>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_2">
-              <item>
-               <widget class="QRadioButton" name="radioButton_NOT_SEEN_MEANS_UP">
-                <property name="text">
-                 <string>Not Seen means Up</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="radioButton_ALWAYS_VALID">
-                <property name="text">
-                 <string>Always True</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="radioButton_VALID_IS_INRANGE">
-                <property name="text">
-                 <string>In Range</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="radioButton_VALID_IS_CONFIDENCE">
-                <property name="text">
-                 <string>Confidence</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="groupBox_Slot">
-             <property name="title">
-              <string>Slot is...</string>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout">
-              <item>
-               <widget class="QRadioButton" name="radioButton_calculated">
-                <property name="text">
-                 <string>Computed from
+  <widget class="QDockWidget" name="dockWidget_quirks">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>9</y>
+     <width>225</width>
+     <height>451</height>
+    </rect>
+   </property>
+   <property name="features">
+    <set>QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetMovable</set>
+   </property>
+   <property name="windowTitle">
+    <string>Quirks</string>
+   </property>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QScrollArea" name="scrollArea">
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <widget class="QWidget" name="scrollAreaWidgetContents">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>205</width>
+          <height>464</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QGroupBox" name="groupBox_Valid">
+           <property name="title">
+            <string>Valid is...</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <widget class="QRadioButton" name="radioButton_NOT_SEEN_MEANS_UP">
+              <property name="text">
+               <string>Not Seen means Up</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_ALWAYS_VALID">
+              <property name="text">
+               <string>Always True</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_VALID_IS_INRANGE">
+              <property name="text">
+               <string>In Range</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_VALID_IS_CONFIDENCE">
+              <property name="text">
+               <string>Confidence</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_Slot">
+           <property name="title">
+            <string>Slot is...</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <widget class="QRadioButton" name="radioButton_calculated">
+              <property name="text">
+               <string>Computed from
 Contact Id</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="radioButton_SLOT_IS_CONTACTID">
-                <property name="text">
-                 <string>Contact Id</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="radioButton_SLOT_IS_CONTACTNUMBER">
-                <property name="text">
-                 <string>Contact Number</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="radioButton_SLOT_IS_CONTACTID_MINUS_ONE">
-                <property name="text">
-                 <string>Contact Id
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_SLOT_IS_CONTACTID">
+              <property name="text">
+               <string>Contact Id</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_SLOT_IS_CONTACTNUMBER">
+              <property name="text">
+               <string>Contact Number</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_SLOT_IS_CONTACTID_MINUS_ONE">
+              <property name="text">
+               <string>Contact Id
 Minus One</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="Line" name="line">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label">
-                <property name="font">
-                 <font>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Vendor specific
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="Line" name="line">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label">
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Vendor specific
 slot functions</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="radioButton_CYPRESS">
-                <property name="text">
-                 <string>Cypress</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="groupBox_vendor">
-             <property name="title">
-              <string>Vendor specific</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_2"/>
-            </widget>
-           </item>
-           <item>
-            <spacer name="verticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </widget>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
-   </item>
-  </layout>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="radioButton_CYPRESS">
+              <property name="text">
+               <string>Cypress</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_vendor">
+           <property name="title">
+            <string>Vendor specific</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_2"/>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
  </widget>
  <tabstops>
   <tabstop>scrollArea</tabstop>

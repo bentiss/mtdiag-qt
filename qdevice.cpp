@@ -50,8 +50,9 @@ QDevice::QDevice(KernelDevice *kernelDevice,
         form->lineEdit_driver->setEnabled(false);
     form->lineEdit_node->setText(kernelDevice->getPath());
 
-    if (hid && QString("hid-multitouch") == hid->getDriver())
-        hid_multitouch = new HidMT(hid, this->splitter);
+    if (hid && QString("hid-multitouch") == hid->getDriver()) {
+        hid_multitouch = new HidMT(udevMgr, hid, this->splitter);
+    }
 
     kernelDevice->setProcessEventArgs(&staticProcessEvent, this);
     sn = new QSocketNotifier(fd, QSocketNotifier::Read, this);

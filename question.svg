@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="150"
+   height="150"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.1 r9760"
+   sodipodi:docname="question.svg"
+   inkscape:export-filename="/media/data/Src/MTDiag/mtdiag-qt/question.png"
+   inkscape:export-xdpi="150"
+   inkscape:export-ydpi="150">
+  <defs
+     id="defs4">
+    <filter
+       id="filter4091"
+       inkscape:label="Drop shadow"
+       width="1.5"
+       height="1.5"
+       x="-.25"
+       y="-.25">
+      <feGaussianBlur
+         id="feGaussianBlur4093"
+         in="SourceAlpha"
+         stdDeviation="3.2"
+         result="blur" />
+      <feColorMatrix
+         id="feColorMatrix4095"
+         result="bluralpha"
+         type="matrix"
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.5 0 " />
+      <feOffset
+         id="feOffset4097"
+         in="bluralpha"
+         dx="2.1"
+         dy="3"
+         result="offsetBlur" />
+      <feMerge
+         id="feMerge4099">
+        <feMergeNode
+           id="feMergeNode4101"
+           in="offsetBlur" />
+        <feMergeNode
+           id="feMergeNode4103"
+           in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter
+       id="filter4128"
+       inkscape:label="Drop shadow"
+       width="1.5"
+       height="1.5"
+       x="-.25"
+       y="-.25">
+      <feGaussianBlur
+         id="feGaussianBlur4130"
+         in="SourceAlpha"
+         stdDeviation="3.2"
+         result="blur" />
+      <feColorMatrix
+         id="feColorMatrix4132"
+         result="bluralpha"
+         type="matrix"
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.5 0 " />
+      <feOffset
+         id="feOffset4134"
+         in="bluralpha"
+         dx="2.1"
+         dy="3"
+         result="offsetBlur" />
+      <feMerge
+         id="feMerge4136">
+        <feMergeNode
+           id="feMergeNode4138"
+           in="offsetBlur" />
+        <feMergeNode
+           id="feMergeNode4140"
+           in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="32.06498"
+     inkscape:cy="120.35999"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1366"
+     inkscape:window-height="693"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-91.15625,-23.03125)">
+    <text
+       xml:space="preserve"
+       style="font-size:70.55085754px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;filter:url(#filter4128);font-family:Sans"
+       x="84.287018"
+       y="170.61282"
+       id="text4124"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.88209065,0,0,0.88209065,19.326606,11.537038)"><tspan
+         sodipodi:role="line"
+         id="tspan4126"
+         x="84.287018"
+         y="170.61282"
+         style="font-size:253.983078px;font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:URW Chancery L;-inkscape-font-specification:URW Chancery L Bold Italic">?</tspan></text>
+  </g>
+</svg>

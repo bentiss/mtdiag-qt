@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="150"
+   height="150"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.1 r9760"
+   sodipodi:docname="fault.svg"
+   inkscape:export-filename="/media/data/Src/MTDiag/mtdiag-qt/fault.png"
+   inkscape:export-xdpi="150"
+   inkscape:export-ydpi="150">
+  <defs
+     id="defs4">
+    <filter
+       id="filter3982"
+       inkscape:label="Drop shadow"
+       width="1.5"
+       height="1.5"
+       x="-.25"
+       y="-.25">
+      <feGaussianBlur
+         id="feGaussianBlur3984"
+         in="SourceAlpha"
+         stdDeviation="3.2"
+         result="blur" />
+      <feColorMatrix
+         id="feColorMatrix3986"
+         result="bluralpha"
+         type="matrix"
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.5 0 " />
+      <feOffset
+         id="feOffset3988"
+         in="bluralpha"
+         dx="2.1"
+         dy="3"
+         result="offsetBlur" />
+      <feMerge
+         id="feMerge3990"
+         result="fbSourceGraphic">
+        <feMergeNode
+           id="feMergeNode3992"
+           in="offsetBlur" />
+        <feMergeNode
+           id="feMergeNode3994"
+           in="SourceGraphic" />
+      </feMerge>
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix3996" />
+      <feGaussianBlur
+         id="feGaussianBlur3998"
+         in="fbSourceGraphicAlpha"
+         stdDeviation="3.2"
+         result="blur" />
+      <feColorMatrix
+         id="feColorMatrix4000"
+         result="bluralpha"
+         type="matrix"
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.5 0 " />
+      <feOffset
+         id="feOffset4002"
+         in="bluralpha"
+         dx="2.1"
+         dy="3"
+         result="offsetBlur" />
+      <feMerge
+         id="feMerge4004">
+        <feMergeNode
+           id="feMergeNode4006"
+           in="offsetBlur" />
+        <feMergeNode
+           id="feMergeNode4008"
+           in="fbSourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter
+       id="filter4071"
+       inkscape:label="Drop shadow"
+       width="1.5"
+       height="1.5"
+       x="-.25"
+       y="-.25">
+      <feGaussianBlur
+         id="feGaussianBlur4073"
+         in="SourceAlpha"
+         stdDeviation="3.2"
+         result="blur" />
+      <feColorMatrix
+         id="feColorMatrix4075"
+         result="bluralpha"
+         type="matrix"
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.5 0 " />
+      <feOffset
+         id="feOffset4077"
+         in="bluralpha"
+         dx="2.1"
+         dy="3"
+         result="offsetBlur" />
+      <feMerge
+         id="feMerge4079">
+        <feMergeNode
+           id="feMergeNode4081"
+           in="offsetBlur" />
+        <feMergeNode
+           id="feMergeNode4083"
+           in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter
+       id="filter4236"
+       inkscape:label="Drop shadow"
+       width="1.5"
+       height="1.5"
+       x="-.25"
+       y="-.25">
+      <feGaussianBlur
+         id="feGaussianBlur4238"
+         in="SourceAlpha"
+         stdDeviation="3.2"
+         result="blur" />
+      <feColorMatrix
+         id="feColorMatrix4240"
+         result="bluralpha"
+         type="matrix"
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.5 0 " />
+      <feOffset
+         id="feOffset4242"
+         in="bluralpha"
+         dx="2.1"
+         dy="3"
+         result="offsetBlur" />
+      <feMerge
+         id="feMerge4244">
+        <feMergeNode
+           id="feMergeNode4246"
+           in="offsetBlur" />
+        <feMergeNode
+           id="feMergeNode4248"
+           in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="-86.063098"
+     inkscape:cy="81.528661"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1366"
+     inkscape:window-height="693"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-91.15625,-23.03125)">
+    <text
+       xml:space="preserve"
+       style="font-size:62.17727661px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#dc2323;fill-opacity:1;stroke:none;filter:url(#filter4236);font-family:Sans"
+       x="91.156242"
+       y="162.19455"
+       id="text4232"
+       sodipodi:linespacing="125%"
+       transform="matrix(0.92712507,0,0,0.92712507,12.115746,7.1954098)"><tspan
+         sodipodi:role="line"
+         id="tspan4234"
+         x="91.156242"
+         y="162.19455"
+         style="font-size:223.8381958px;font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#dc2323;fill-opacity:1;font-family:URW Chancery L;-inkscape-font-specification:URW Chancery L Bold Italic">X</tspan></text>
+  </g>
+</svg>

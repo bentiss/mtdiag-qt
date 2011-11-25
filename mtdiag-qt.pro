@@ -37,11 +37,18 @@ HEADERS  += mainwindow.h \
     xi2device.h \
     hidmt.h \
     graphicsview.h \
-    vidpidaction.h
+    vidpidaction.h \
+    hid.h
 
 FORMS    += mainwindow.ui \
     quirks.ui \
-    input.ui
+    input.ui \
+    protocol.ui
+
+OTHER_FILES +=
+
+RESOURCES += \
+    icons.qrc
 
 
 
