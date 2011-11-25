@@ -2,7 +2,6 @@
 #include "ui_input.h"
 #include "mainwindow.h"
 #include <QDebug>
-#include <QSocketNotifier>
 #include <QColorDialog>
 #include <stdlib.h>
 
@@ -17,19 +16,22 @@ static void staticProcessEvent (struct input_event *ev, void *args)
 }
 
 QDevice::QDevice(KernelDevice *kernelDevice,
-                 UdevDevice *hid,
+                 Udev *udevMgr,
+                 UdevDevice *device,
                  GraphicsView* view,
                  QWidget *parent) :
     QWidget(parent),
     form(new Ui::Form_Input),
-    hid_multitouch(0),
     kernelDevice(kernelDevice),
-    hid(hid),
+    udevMgr(udevMgr),
+    device(device),
+    hid(udevMgr->getHid(device)),
+    hid_multitouch(0),
     view(view)
 {
     int fd = kernelDevice->getFileDescriptor();
     int hue;
-    QSocketNotifier *sn;
+
     touches = QHash <int, Touch *>();
     brushes = QList <QBrush *>();
     hue = (rand() % 10) * 36;
@@ -61,6 +63,7 @@ QDevice::QDevice(KernelDevice *kernelDevice,
 
 QDevice::~QDevice ()
 {
+    delete sn;
     delete hid;
     delete kernelDevice;
     delete form;

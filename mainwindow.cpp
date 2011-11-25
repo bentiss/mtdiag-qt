@@ -72,7 +72,6 @@ bool MainWindow::isMaximized ()
 void MainWindow::addDevice (UdevDevice *device)
 {
     KernelDevice *kernelDevice;
-    UdevDevice *hid;
     QDevice *qDev;
 
     kernelDevice = new KernelDevice (device->getDevnode());
@@ -85,9 +84,7 @@ void MainWindow::addDevice (UdevDevice *device)
         return;
     }
 
-    hid = udev->getHid(device);
-
-    qDev = new QDevice (kernelDevice, hid, ui->graphicsView, this);
+    qDev = new QDevice (kernelDevice, udev, device, ui->graphicsView, this);
     qDev->expertMode(ui->actionExpert_Mode->isChecked());
     ui->tabWidgetInputDevices->addTab(qDev, kernelDevice->getName());
     qDevices.append(qDev);

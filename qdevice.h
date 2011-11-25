@@ -6,6 +6,7 @@
 #include <QWidget>
 #include <QGridLayout>
 #include <QSplitter>
+#include <QSocketNotifier>
 #include "udev.h"
 #include "touch.h"
 #include "kernelDevice.h"
@@ -21,7 +22,8 @@ class QDevice : public QWidget
     Q_OBJECT
 public:
     explicit QDevice(KernelDevice *kernelDevice,
-                     UdevDevice *hid,
+                     Udev *udevMgr,
+                     UdevDevice *device,
                      GraphicsView *view,
                      QWidget *parent = 0);
     ~QDevice ();
@@ -37,6 +39,8 @@ public:
 private:
     Ui::Form_Input *form;
     KernelDevice *kernelDevice;
+    Udev *udevMgr;
+    UdevDevice *device;
     UdevDevice *hid;
     HidMT *hid_multitouch;
     GraphicsView *view;
@@ -46,6 +50,7 @@ private:
     QGridLayout *gridLayout;
     QSplitter *splitter;
     QBrush *currentBrush;
+    QSocketNotifier *sn;
 
     QBrush *nextBrush();
 
