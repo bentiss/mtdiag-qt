@@ -51,6 +51,8 @@ MainWindow::~MainWindow()
     delete udev;
     foreach (QDevice *dev, qDevices)
         delete dev;
+    foreach (VidPidAction *action, actions)
+        delete action;
     delete xi2manager;
 }
 

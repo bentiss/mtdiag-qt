@@ -48,7 +48,7 @@ bool KernelDevice::init()
     }
 
     ioctl (fileDescriptor, EVIOCGNAME(sizeof(name)), name);
-    ioctl (fileDescriptor, EVIOCGID, inputID);
+    ioctl (fileDescriptor, EVIOCGID, &inputID);
 
     initialized = true;
     return initialized;
