@@ -17,6 +17,8 @@ XI2Manager::~XI2Manager()
     for(it = map.begin(); it != map.end(); it++) {
         delete it->second;
     }
+
+    XCloseDisplay(dpy);
 }
 
 void XI2Manager::appendXI2Devices(const char *c_name)
