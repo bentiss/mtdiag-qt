@@ -205,6 +205,7 @@ void HidMT::updateQuirks ()
 void HidMT::autoDetect(bool state)
 {
     formProtocol->progressBar->setVisible(state);
+    formProtocol->progressBar->setValue(0);
     if (!state) {
         if (fdHiddev >= 0) {
             delete sn;
@@ -215,6 +216,7 @@ void HidMT::autoDetect(bool state)
     }
 
     fdHiddev = open (hiddev->getDevnode(), O_RDONLY);
+    qDebug() << hiddev->getDevnode();
     if (fdHiddev >= 0) {
         sn = new QSocketNotifier(fdHiddev, QSocketNotifier::Read, this);
         QObject::connect(sn, SIGNAL(activated(int)), this, SLOT(events(int)));
@@ -309,6 +311,9 @@ void HidMT::autoDetect(bool state)
         }
     }
     mt_values.append(touch);
+    prev_mt_values.append(prev_touch);
+
+    qDebug() << usagesCount << mt_values.count();
 
 }
 
@@ -373,33 +378,93 @@ void HidMT::processOneEvent(struct hiddev_event *ev)
         contactCount = 0;
     }
 
+    qDebug() << eventIndex << usagesCount;
+
 }
 
 void HidMT::processOneFrame()
 {
-    qDebug() << "\ngot" << contactCount << "touches:";
+    int finger_count = 0;
+    QPixmap check_icon = QPixmap(QString::fromUtf8(":/icons/check.png"));
+    QPixmap fault_icon = QPixmap(QString::fromUtf8(":/icons/fault.png"));
+    QPixmap question_icon = QPixmap(QString::fromUtf8(":/icons/question.png"));
+    int progressBarValue = formProtocol->progressBar->value();
+
+    if (!mt_values[0].tipSwitch) {
+        formProtocol->icon_tipswitch->setPixmap(fault_icon);
+        formProtocol->progressBar->setValue(100);
+        formProtocol->pushButton->setChecked(false);
+        return;
+    }
+
     for (int slot = 0; slot < mt_values.count(); ++slot) {
         struct MT::touch *touch = &mt_values[slot];
-        qDebug() << "slot #" << slot;
-        if (touch->tipSwitch)
-            qDebug() << " TipSwitch:" << *touch->tipSwitch;
-        if (touch->x)
-            qDebug() << " X:" << *touch->x;
-        if (touch->y)
-            qDebug() << " Y:" << *touch->y;
-        if (touch->inRange)
-            qDebug() << " InRange:" << *touch->inRange;
-        if (touch->confidence)
-            qDebug() << " Confidence:" << *touch->confidence;
-        if (touch->width)
-            qDebug() << " Width:" << *touch->width;
-        if (touch->height)
-            qDebug() << " Height:" << *touch->height;
-        if (touch->pressure)
-            qDebug() << " Pressure:" << *touch->pressure;
-        if (touch->contactID)
-            qDebug() << " ContactID:" << *touch->contactID;
+        if (*touch->tipSwitch)
+            finger_count++;
     }
+
+    //if (formProtocol->icon_tipswitch->text() != "ok") {
+        formProtocol->icon_tipswitch->setPixmap(finger_count <= contactCount ?
+                                                check_icon : fault_icon);
+//        formProtocol->icon_tipswitch->setText("ok");
+//        progressBarValue += 25;
+//        formProtocol->progressBar->setValue(progressBarValue);
+//    }
+
+    for (int slot = 0; slot < mt_values.count(); ++slot) {
+        struct MT::touch *touch = &mt_values[slot];
+        struct MT::touch *prev_touch;
+        int old_slot = -1;
+        for (int i = 0; i < prev_mt_values.count(); ++i) {
+            struct MT::touch *prev = &prev_mt_values[i];
+            if (*prev->contactID == *touch->contactID) {
+                old_slot = i;
+                prev_touch = prev;
+                break;
+            }
+        }
+
+        if (!prev_touch)
+            continue;
+
+        if (!*touch->tipSwitch && *prev_touch->tipSwitch) {
+            if (touch->inRange &&
+                    *touch->inRange && *prev_touch->inRange) {
+                formQuirks->radioButton_VALID_IS_INRANGE->setChecked(true);
+                formProtocol->icon_valid->setPixmap(check_icon);
+            } else if (touch->confidence &&
+                       *touch->confidence && *prev_touch->confidence) {
+                formQuirks->radioButton_VALID_IS_CONFIDENCE->setChecked(true);
+                formProtocol->icon_valid->setPixmap(check_icon);
+            }  else {
+                formProtocol->icon_valid->setPixmap(question_icon);
+            }
+        }
+    }
+
+//    qDebug() << "\ngot" << contactCount << "touches:";
+//    for (int slot = 0; slot < mt_values.count(); ++slot) {
+//        struct MT::touch *touch = &mt_values[slot];
+//        qDebug() << "slot #" << slot;
+//        if (touch->tipSwitch)
+//            qDebug() << " TipSwitch:" << *touch->tipSwitch;
+//        if (touch->x)
+//            qDebug() << " X:" << *touch->x;
+//        if (touch->y)
+//            qDebug() << " Y:" << *touch->y;
+//        if (touch->inRange)
+//            qDebug() << " InRange:" << *touch->inRange;
+//        if (touch->confidence)
+//            qDebug() << " Confidence:" << *touch->confidence;
+//        if (touch->width)
+//            qDebug() << " Width:" << *touch->width;
+//        if (touch->height)
+//            qDebug() << " Height:" << *touch->height;
+//        if (touch->pressure)
+//            qDebug() << " Pressure:" << *touch->pressure;
+//        if (touch->contactID)
+//            qDebug() << " ContactID:" << *touch->contactID;
+//    }
 
     memcpy(prev_usages, usages, usagesCount * sizeof (struct hiddev_event));
 }
