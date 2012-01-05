@@ -76,6 +76,7 @@ HidMT::HidMT(Udev *udevMgr, UdevDevice *hid, QWidget *parent) :
 
     readQuirks();
 
+#if 0
     if (wasManuallyAdded()) {
         formProtocol->setupUi(this);
         splitter->addWidget(formProtocol->groupBox);
@@ -94,6 +95,7 @@ HidMT::HidMT(Udev *udevMgr, UdevDevice *hid, QWidget *parent) :
         } else
             formProtocol->scrollAreaWidgetContents->setEnabled(false);
     }
+#endif
 }
 
 HidMT::~HidMT()
