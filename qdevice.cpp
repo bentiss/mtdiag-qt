@@ -19,6 +19,7 @@
 #include "qdevice.h"
 #include "ui_input.h"
 #include "mainwindow.h"
+#include "drawingtouch.h"
 #include <QDebug>
 #include <QColorDialog>
 #include <stdlib.h>
@@ -163,7 +164,7 @@ Touch *QDevice::getCurrentTouch ()
     /* no need to test ok */
 
     if (!touches.contains(slot)) {
-        touches[slot] = new Touch (view->getScene());
+        touches[slot] = new DrawingTouch (view->getScene());
     }
     return touches[slot];
 }

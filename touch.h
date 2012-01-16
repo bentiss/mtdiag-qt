@@ -28,17 +28,19 @@ class Touch : public QObject
 {
     Q_OBJECT
 public:
-    explicit Touch(QGraphicsScene *scene, QObject *parent = 0);
-    ~Touch();
-    bool update(QBrush *color);
+    explicit Touch(QObject *parent = 0);
+    virtual ~Touch();
+    virtual bool update(QBrush *color) = 0;
     void setCx(int newCx) {cx = newCx;}
     void setCy(int newCy) {cy = newCy;}
     void setTrackingId(int newTrackingId) {trackingId = newTrackingId;}
 
+protected:
+    int Cx() {return cx;}
+    int Cy() {return cy;}
+    int TrackingId() {return trackingId;}
+
 private:
-    QGraphicsScene *scene;
-    QGraphicsEllipseItem *ellipse;
-    int radius;
     int trackingId;
     int cx;
     int cy;

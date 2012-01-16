@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     xi2device.cpp \
     hidmt.cpp \
     graphicsview.cpp \
-    vidpidaction.cpp
+    vidpidaction.cpp \
+    drawingtouch.cpp
 
 HEADERS  += mainwindow.h \
     udev.h \
@@ -38,7 +39,8 @@ HEADERS  += mainwindow.h \
     hidmt.h \
     graphicsview.h \
     vidpidaction.h \
-    hid.h
+    hid.h \
+    drawingtouch.h
 
 FORMS    += mainwindow.ui \
     quirks.ui \
