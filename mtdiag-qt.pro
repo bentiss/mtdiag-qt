@@ -12,45 +12,52 @@ TEMPLATE = app
 LIBS += -ludev -lX11 -lXi
 INCLUDEPATH += /media/data/Src/Kernel/all/include/
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    udev.cpp \
-    qdevice.cpp \
-    touch.cpp \
-    colorwidget.cpp \
-    kernelDevice.cpp \
-    udevdevice.cpp \
-    xi2manager.cpp \
-    xi2device.cpp \
-    hidmt.cpp \
-    graphicsview.cpp \
-    vidpidaction.cpp \
-    drawingtouch.cpp
+SOURCES += \
+    src/xi2manager.cpp \
+    src/xi2device.cpp \
+    src/vidpidaction.cpp \
+    src/udevdevice.cpp \
+    src/udev.cpp \
+    src/touch.cpp \
+    src/qdevice.cpp \
+    src/mainwindow.cpp \
+    src/main.cpp \
+    src/kernelDevice.cpp \
+    src/hidmt.cpp \
+    src/graphicsview.cpp \
+    src/drawingtouch.cpp \
+    src/colorwidget.cpp
 
-HEADERS  += mainwindow.h \
-    udev.h \
-    qdevice.h \
-    touch.h \
-    colorwidget.h \
-    kernelDevice.h \
-    udevdevice.h \
-    xi2manager.h \
-    xi2device.h \
-    hidmt.h \
-    graphicsview.h \
-    vidpidaction.h \
-    hid.h \
-    drawingtouch.h
+HEADERS  += \
+    src/xi2manager.h \
+    src/xi2device.h \
+    src/vidpidaction.h \
+    src/ui_quirks.h \
+    src/ui_protocol.h \
+    src/ui_mainwindow.h \
+    src/ui_input.h \
+    src/udevdevice.h \
+    src/udev.h \
+    src/touch.h \
+    src/qdevice.h \
+    src/mainwindow.h \
+    src/kernelDevice.h \
+    src/hidmt.h \
+    src/hid.h \
+    src/graphicsview.h \
+    src/drawingtouch.h \
+    src/colorwidget.h
 
-FORMS    += mainwindow.ui \
-    quirks.ui \
-    input.ui \
-    protocol.ui
+FORMS    += \
+    forms/quirks.ui \
+    forms/protocol.ui \
+    forms/mainwindow.ui \
+    forms/input.ui
 
 OTHER_FILES +=
 
 RESOURCES += \
-    icons.qrc
+    resources/icons.qrc
 
 
 
