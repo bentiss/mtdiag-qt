@@ -39,9 +39,9 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
-          <width>205</width>
-          <height>464</height>
+          <y>-154</y>
+          <width>201</width>
+          <height>574</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -155,9 +155,24 @@ slot functions</string>
          <item>
           <widget class="QGroupBox" name="groupBox_vendor">
            <property name="title">
-            <string>Vendor specific</string>
+            <string>General</string>
            </property>
-           <layout class="QGridLayout" name="gridLayout_2"/>
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="1" column="0">
+             <widget class="QCheckBox" name="checkBox_WIN_8_CERTIFIED">
+              <property name="text">
+               <string>Win 8</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QCheckBox" name="checkBox_NO_AREA">
+              <property name="text">
+               <string>No Area</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
          <item>
@@ -201,8 +216,8 @@ slot functions</string>
    <slot>updateQuirks()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>139</x>
-     <y>258</y>
+     <x>156</x>
+     <y>101</y>
     </hint>
     <hint type="destinationlabel">
      <x>33</x>
@@ -217,8 +232,8 @@ slot functions</string>
    <slot>updateQuirks()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>153</x>
-     <y>286</y>
+     <x>187</x>
+     <y>140</y>
     </hint>
     <hint type="destinationlabel">
      <x>62</x>
@@ -233,8 +248,8 @@ slot functions</string>
    <slot>updateQuirks()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>117</x>
-     <y>314</y>
+     <x>151</x>
+     <y>172</y>
     </hint>
     <hint type="destinationlabel">
      <x>89</x>
@@ -249,8 +264,8 @@ slot functions</string>
    <slot>updateQuirks()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>99</x>
-     <y>342</y>
+     <x>116</x>
+     <y>217</y>
     </hint>
     <hint type="destinationlabel">
      <x>131</x>
@@ -265,8 +280,8 @@ slot functions</string>
    <slot>updateQuirks()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>130</x>
-     <y>194</y>
+     <x>164</x>
+     <y>20</y>
     </hint>
     <hint type="destinationlabel">
      <x>209</x>
@@ -281,8 +296,8 @@ slot functions</string>
    <slot>updateQuirks()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>166</y>
+     <x>145</x>
+     <y>-12</y>
     </hint>
     <hint type="destinationlabel">
      <x>169</x>
@@ -297,8 +312,8 @@ slot functions</string>
    <slot>updateQuirks()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>85</x>
-     <y>138</y>
+     <x>119</x>
+     <y>-44</y>
     </hint>
     <hint type="destinationlabel">
      <x>22</x>
@@ -313,8 +328,8 @@ slot functions</string>
    <slot>updateQuirks()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>87</x>
-     <y>110</y>
+     <x>121</x>
+     <y>-76</y>
     </hint>
     <hint type="destinationlabel">
      <x>10</x>
@@ -329,12 +344,44 @@ slot functions</string>
    <slot>updateQuirks()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>81</x>
-     <y>355</y>
+     <x>98</x>
+     <y>337</y>
     </hint>
     <hint type="destinationlabel">
      <x>307</x>
      <y>484</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_WIN_8_CERTIFIED</sender>
+   <signal>clicked()</signal>
+   <receiver>Form_Quirks</receiver>
+   <slot>updateQuirks()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>91</x>
+     <y>412</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>289</x>
+     <y>454</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_NO_AREA</sender>
+   <signal>clicked()</signal>
+   <receiver>Form_Quirks</receiver>
+   <slot>updateQuirks()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>66</x>
+     <y>396</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>292</x>
+     <y>405</y>
     </hint>
    </hints>
   </connection>

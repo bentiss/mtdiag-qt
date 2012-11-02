@@ -46,6 +46,8 @@ static struct quirks QUIRKS[] = {
     {"VALID_IS_CONFIDENCE"         , 1 << 6},
     {"EGALAX_XYZ_FIXUP"            , 1 << 7},
     {"SLOT_IS_CONTACTID_MINUS_ONE" , 1 << 8},
+    {"NO_AREA"                     , 1 << 9},
+    {"WIN_8_CERTIFIED"             , 1 << 10},
     {0,0}
 };
 
