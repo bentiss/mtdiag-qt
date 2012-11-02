@@ -29,6 +29,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include "hid.h"
+#include <unistd.h>
 
 struct quirks {
     QString name;
