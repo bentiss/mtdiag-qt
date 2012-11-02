@@ -154,18 +154,16 @@ uint HidMT::readQuirks()
     dw = formQuirks->dockWidget_quirks;
     for (uint i = 0; i < sizeof(QUIRKS)/sizeof(QUIRKS[0]); ++i) {
         struct quirks *quirk = &QUIRKS[i];
-        if (quirks & quirk->value) {
-            QRadioButton *radio;
-            QCheckBox *checkbox;
+        QRadioButton *radio;
+        QCheckBox *checkbox;
 
-            radio = dw->findChild<QRadioButton *>(QString("radioButton_%1").arg(quirk->name));
-            if (radio)
-                radio->setChecked(true);
+        radio = dw->findChild<QRadioButton *>(QString("radioButton_%1").arg(quirk->name));
+        if (radio)
+            radio->setChecked(quirks & quirk->value);
 
-            checkbox = dw->findChild<QCheckBox *>(QString("checkBox_%1").arg(quirk->name));
-            if (checkbox)
-                checkbox->setChecked(true);
-        }
+        checkbox = dw->findChild<QCheckBox *>(QString("checkBox_%1").arg(quirk->name));
+        if (checkbox)
+            checkbox->setChecked(quirks & quirk->value);
     }
 
     opened = file.open(QIODevice::WriteOnly | QIODevice::Text);
