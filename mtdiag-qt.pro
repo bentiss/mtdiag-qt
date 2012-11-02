@@ -12,6 +12,19 @@ TEMPLATE = app
 LIBS += -ludev -lX11 -lXi
 INCLUDEPATH += /media/data/Src/Kernel/all/include/
 
+#CONFIG(debug, debug|release) {
+#    DESTDIR = build/debug
+#} else {
+#    DESTDIR = build/release
+#}
+
+DESTDIR = build
+
+OBJECTS_DIR = $${DESTDIR}/.obj
+MOC_DIR = $${DESTDIR}/.moc
+RCC_DIR = $${DESTDIR}/.rcc
+UI_DIR = $${DESTDIR}/.ui
+
 SOURCES += \
     src/xi2manager.cpp \
     src/xi2device.cpp \
