@@ -45,10 +45,10 @@ HEADERS  += \
     src/xi2manager.h \
     src/xi2device.h \
     src/vidpidaction.h \
-    src/ui_quirks.h \
-    src/ui_protocol.h \
-    src/ui_mainwindow.h \
-    src/ui_input.h \
+    $${DESTDIR}/.ui/ui_quirks.h \
+    $${DESTDIR}/.ui/ui_protocol.h \
+    $${DESTDIR}/.ui/ui_mainwindow.h \
+    $${DESTDIR}/.ui/ui_input.h \
     src/udevdevice.h \
     src/udev.h \
     src/touch.h \
