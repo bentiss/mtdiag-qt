@@ -34,16 +34,19 @@ public:
     void setCx(int newCx) {cx = newCx;}
     void setCy(int newCy) {cy = newCy;}
     void setTrackingId(int newTrackingId) {trackingId = newTrackingId;}
+    void setPressed(int newPressed) {pressed = newPressed;}
 
 protected:
     int Cx() {return cx;}
     int Cy() {return cy;}
     int TrackingId() {return trackingId;}
+    bool Pressed() {return pressed;}
 
 private:
     int trackingId;
     int cx;
     int cy;
+    bool pressed;
 
 signals:
 

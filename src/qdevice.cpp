@@ -118,6 +118,10 @@ void QDevice::processEvent (struct input_event *ev)
             touch = getCurrentTouch();
             touch->setTrackingId(ev->value);
             break;
+        case ABS_MT_DISTANCE:
+            touch = getCurrentTouch();
+            touch->setPressed(ev->value == 0);
+            break;
         }
     } else if (ev->type == EV_SYN && ev->code == SYN_REPORT) {
         foreach (Touch *touch, touches) {
@@ -165,6 +169,7 @@ Touch *QDevice::getCurrentTouch ()
 
     if (!touches.contains(slot)) {
         touches[slot] = new DrawingTouch (view->getScene());
+        touches[slot]->setPressed(true);
     }
     return touches[slot];
 }

@@ -18,6 +18,9 @@
 
 #include "drawingtouch.h"
 
+static QPen pressedPen = QPen(Qt::black, 5);
+static QPen releasedPen = QPen(Qt::black, 1);
+
 DrawingTouch::DrawingTouch(QGraphicsScene *scene, QObject *parent) :
     Touch(parent),
     scene(scene),
@@ -41,6 +44,7 @@ bool DrawingTouch::update(QBrush *color)
         QRectF rect = ellipse->rect();
         rect.moveCenter(QPointF(Cx(), Cy()));
         ellipse->setRect(rect);
+        ellipse->setPen(Pressed() ? pressedPen : releasedPen);
         if (!wasVisible) {
             ellipse->setBrush(*color);
             ellipse->show();
