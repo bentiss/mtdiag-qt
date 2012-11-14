@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>324</width>
-    <height>513</height>
+    <height>571</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>9</x>
      <y>9</y>
-     <width>225</width>
-     <height>451</height>
+     <width>291</width>
+     <height>561</height>
     </rect>
    </property>
    <property name="features">
@@ -39,9 +39,9 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-154</y>
-          <width>201</width>
-          <height>574</height>
+          <y>-43</y>
+          <width>258</width>
+          <height>559</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -128,27 +128,6 @@ Minus One</string>
               </property>
              </widget>
             </item>
-            <item>
-             <widget class="QLabel" name="label">
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string>Vendor specific
-slot functions</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radioButton_CYPRESS">
-              <property name="text">
-               <string>Cypress</string>
-              </property>
-             </widget>
-            </item>
            </layout>
           </widget>
          </item>
@@ -158,17 +137,31 @@ slot functions</string>
             <string>General</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_2">
-            <item row="1" column="0">
-             <widget class="QCheckBox" name="checkBox_WIN_8_CERTIFIED">
-              <property name="text">
-               <string>Win 8</string>
-              </property>
-             </widget>
-            </item>
             <item row="0" column="0">
              <widget class="QCheckBox" name="checkBox_NO_AREA">
               <property name="text">
                <string>No Area</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QCheckBox" name="checkBox_IGNORE_DUPLICATES">
+              <property name="text">
+               <string>Ignore duplicates</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QCheckBox" name="checkBox_HOVERING">
+              <property name="text">
+               <string>Hovering device</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QCheckBox" name="checkBox_CONTACT_CNT_ACCURATE">
+              <property name="text">
+               <string>Contact Count Reliable</string>
               </property>
              </widget>
             </item>
@@ -216,8 +209,8 @@ slot functions</string>
    <slot>updateQuirks()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>156</x>
-     <y>101</y>
+     <x>201</x>
+     <y>252</y>
     </hint>
     <hint type="destinationlabel">
      <x>33</x>
@@ -232,8 +225,8 @@ slot functions</string>
    <slot>updateQuirks()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>187</x>
-     <y>140</y>
+     <x>232</x>
+     <y>285</y>
     </hint>
     <hint type="destinationlabel">
      <x>62</x>
@@ -248,8 +241,8 @@ slot functions</string>
    <slot>updateQuirks()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>151</x>
-     <y>172</y>
+     <x>185</x>
+     <y>303</y>
     </hint>
     <hint type="destinationlabel">
      <x>89</x>
@@ -264,8 +257,8 @@ slot functions</string>
    <slot>updateQuirks()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>116</x>
-     <y>217</y>
+     <x>161</x>
+     <y>354</y>
     </hint>
     <hint type="destinationlabel">
      <x>131</x>
@@ -280,8 +273,8 @@ slot functions</string>
    <slot>updateQuirks()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>164</x>
-     <y>20</y>
+     <x>198</x>
+     <y>160</y>
     </hint>
     <hint type="destinationlabel">
      <x>209</x>
@@ -296,8 +289,8 @@ slot functions</string>
    <slot>updateQuirks()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>145</x>
-     <y>-12</y>
+     <x>190</x>
+     <y>152</y>
     </hint>
     <hint type="destinationlabel">
      <x>169</x>
@@ -312,8 +305,8 @@ slot functions</string>
    <slot>updateQuirks()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>119</x>
-     <y>-44</y>
+     <x>164</x>
+     <y>125</y>
     </hint>
     <hint type="destinationlabel">
      <x>22</x>
@@ -328,44 +321,12 @@ slot functions</string>
    <slot>updateQuirks()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>121</x>
-     <y>-76</y>
+     <x>166</x>
+     <y>88</y>
     </hint>
     <hint type="destinationlabel">
      <x>10</x>
      <y>163</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>radioButton_CYPRESS</sender>
-   <signal>clicked()</signal>
-   <receiver>Form_Quirks</receiver>
-   <slot>updateQuirks()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>98</x>
-     <y>337</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>307</x>
-     <y>484</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBox_WIN_8_CERTIFIED</sender>
-   <signal>clicked()</signal>
-   <receiver>Form_Quirks</receiver>
-   <slot>updateQuirks()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>91</x>
-     <y>412</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>289</x>
-     <y>454</y>
     </hint>
    </hints>
   </connection>
@@ -376,12 +337,60 @@ slot functions</string>
    <slot>updateQuirks()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>66</x>
-     <y>396</y>
+     <x>83</x>
+     <y>416</y>
     </hint>
     <hint type="destinationlabel">
      <x>292</x>
      <y>405</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_IGNORE_DUPLICATES</sender>
+   <signal>clicked()</signal>
+   <receiver>Form_Quirks</receiver>
+   <slot>updateQuirks()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>178</x>
+     <y>454</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>312</x>
+     <y>321</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_HOVERING</sender>
+   <signal>clicked()</signal>
+   <receiver>Form_Quirks</receiver>
+   <slot>updateQuirks()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>246</x>
+     <y>478</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>310</x>
+     <y>487</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_CONTACT_CNT_ACCURATE</sender>
+   <signal>clicked()</signal>
+   <receiver>Form_Quirks</receiver>
+   <slot>updateQuirks()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>161</x>
+     <y>503</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>306</x>
+     <y>528</y>
     </hint>
    </hints>
   </connection>

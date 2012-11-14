@@ -47,7 +47,9 @@ static struct quirks QUIRKS[] = {
     {"EGALAX_XYZ_FIXUP"            , 1 << 7},
     {"SLOT_IS_CONTACTID_MINUS_ONE" , 1 << 8},
     {"NO_AREA"                     , 1 << 9},
-    {"WIN_8_CERTIFIED"             , 1 << 10},
+    {"IGNORE_DUPLICATES"           , 1 << 10},
+    {"HOVERING"                    , 1 << 11},
+    {"CONTACT_CNT_ACCURATE"        , 1 << 12},
     {0,0}
 };
 
