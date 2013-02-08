@@ -27,6 +27,11 @@
 
 #define TestBit(bit, array) ((array[(bit) / LONG_BITS]) & (1L << ((bit) % LONG_BITS)))
 
+struct input_mt_request_layout {
+    __u32 code;
+    __s32 values[MAX_SLOT];
+};
+
 KernelDevice::KernelDevice(const char *path,
                  void (*processEvent)(struct input_event*, void*),
                  void *args):
@@ -41,6 +46,7 @@ KernelDevice::KernelDevice(const char *path,
 
 bool KernelDevice::init()
 {
+    struct input_mt_request_layout mt_request;
     if (initialized)
         return true;
 
@@ -55,6 +61,7 @@ bool KernelDevice::init()
     memset(keys, false, sizeof(keys));
     memset(rel, 0, sizeof(rel));
     memset(name, '\0', sizeof(name));
+    memset(inRangeStates, 0, sizeof(inRangeStates));
 
 
     ioctl (fileDescriptor, EVIOCGBIT (EV_ABS, ABS_CNT), abs_bitmask);
@@ -68,6 +75,15 @@ bool KernelDevice::init()
 
     ioctl (fileDescriptor, EVIOCGNAME(sizeof(name)), name);
     ioctl (fileDescriptor, EVIOCGID, &inputID);
+
+    bool ok;
+    int num_slots = getAbsinfo(&ok, ABS_MT_SLOT)->maximum + 1;
+
+    if (hasAbs(ABS_MT_DISTANCE)) {
+        mt_request.code = ABS_MT_DISTANCE;
+        ioctl (fileDescriptor, EVIOCGMTSLOTS ((num_slots + 1) * sizeof(__s32)), &mt_request);
+        memcpy(inRangeStates, &mt_request.values, num_slots);
+    }
 
     initialized = true;
     return initialized;
@@ -159,4 +175,9 @@ int KernelDevice::getRel (bool *ok, unsigned int code)
 {
     *ok = code <= REL_MAX;
     return rel[code];
+}
+
+int KernelDevice::getInitialInRangeState (unsigned int slot)
+{
+    return inRangeStates[slot];
 }

@@ -169,7 +169,7 @@ Touch *QDevice::getCurrentTouch ()
 
     if (!touches.contains(slot)) {
         touches[slot] = new DrawingTouch (view->getScene());
-        touches[slot]->setPressed(true);
+        touches[slot]->setPressed(kernelDevice->getInitialInRangeState(slot) == 0);
     }
     return touches[slot];
 }

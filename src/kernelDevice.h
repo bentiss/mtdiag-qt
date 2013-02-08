@@ -29,6 +29,8 @@ extern "C" {
 /* Number of longs needed to hold the given number of bits */
 #define NLONGS(x) (((x) + LONG_BITS - 1) / LONG_BITS)
 
+#define MAX_SLOT 250
+
 class KernelDevice
 {
 public:
@@ -61,6 +63,8 @@ public:
     bool hasRel (unsigned int code);
     int getRel (bool *ok, unsigned int code);
 
+    int getInitialInRangeState (unsigned int slot);
+
 private:
     char *path;
     bool initialized;
@@ -75,6 +79,7 @@ private:
     unsigned long rel_bitmask[NLONGS(REL_CNT)];
     unsigned long abs_bitmask[NLONGS(ABS_CNT)];
     struct input_absinfo absinfo[ABS_CNT];
+    int inRangeStates[MAX_SLOT];
     bool keys[KEY_CNT];
     int rel[REL_CNT];
 
