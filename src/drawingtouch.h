@@ -6,7 +6,7 @@
 class DrawingTouch : public Touch
 {
 public:
-    explicit DrawingTouch(QGraphicsScene *scene, QObject *parent = 0);
+    explicit DrawingTouch(QGraphicsScene *scene, int radius = 20, QObject *parent = 0);
     virtual ~DrawingTouch();
     virtual bool update(QBrush *color);
 

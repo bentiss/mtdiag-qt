@@ -21,11 +21,11 @@
 static QPen pressedPen = QPen(Qt::black, 5);
 static QPen releasedPen = QPen(Qt::black, 1);
 
-DrawingTouch::DrawingTouch(QGraphicsScene *scene, QObject *parent) :
+DrawingTouch::DrawingTouch(QGraphicsScene *scene, int radius, QObject *parent) :
     Touch(parent),
     scene(scene),
     ellipse(0),
-    radius(20)
+    radius(radius)
 {
 }
 
