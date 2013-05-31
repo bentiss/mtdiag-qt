@@ -79,11 +79,13 @@ bool KernelDevice::init()
     bool ok;
     int num_slots = getAbsinfo(&ok, ABS_MT_SLOT)->maximum + 1;
 
+#ifdef EVIOCGMTSLOTS
     if (hasAbs(ABS_MT_DISTANCE)) {
         mt_request.code = ABS_MT_DISTANCE;
         ioctl (fileDescriptor, EVIOCGMTSLOTS ((num_slots + 1) * sizeof(__s32)), &mt_request);
         memcpy(inRangeStates, &mt_request.values, num_slots);
     }
+#endif
 
     initialized = true;
     return initialized;

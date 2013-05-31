@@ -23,6 +23,15 @@
 extern "C" {
 #include <limits.h>
 #include <linux/input.h>
+
+#ifndef ABS_MT_DISTANCE
+#define ABS_MT_DISTANCE		0x3b	/* Contact hover distance */
+#endif
+
+#ifndef ABS_MT_TOOL_X
+#define ABS_MT_TOOL_X		0x3c	/* Center X tool position */
+#define ABS_MT_TOOL_Y		0x3d	/* Center Y tool position */
+#endif
 }
 
 #define LONG_BITS (sizeof(long) * 8)
