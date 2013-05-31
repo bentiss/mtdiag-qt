@@ -17,7 +17,9 @@
  **/
 
 #include "udevdevice.h"
+extern "C" {
 #include <libudev.h>
+}
 
 UdevDevice::UdevDevice(struct udev_device *device):
     device(device)
@@ -48,8 +50,6 @@ struct udev_list_entry *UdevDevice::getDevlinksListEntry() {
     return udev_device_get_devlinks_list_entry(device);}
 struct udev_list_entry *UdevDevice::getPropertiesListEntry() {
     return udev_device_get_properties_list_entry(device);}
-struct udev_list_entry *UdevDevice::getTagsListEntry() {
-    return udev_device_get_tags_list_entry(device);}
 const char *UdevDevice::getPropertyValue(const char *key) {
     return udev_device_get_property_value(device, key);}
 const char *UdevDevice::getDriver()

@@ -20,7 +20,9 @@
 #include <stdlib.h>
 #include <QDebug>
 #include <QStringList>
+extern "C" {
 #include <libudev.h>
+}
 
 Udev::Udev(QObject *parent) :
     QObject(parent)

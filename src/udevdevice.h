@@ -39,7 +39,6 @@ public:
 
     struct udev_list_entry *getDevlinksListEntry();
     struct udev_list_entry *getPropertiesListEntry();
-    struct udev_list_entry *getTagsListEntry();
 
     const char *getPropertyValue(const char *key);
     const char *getDriver();
