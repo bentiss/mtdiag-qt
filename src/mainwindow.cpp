@@ -99,7 +99,7 @@ void MainWindow::addDevice (UdevDevice *device)
     if (!kernelDevice->init())
         return;
 
-    if (!kernelDevice->hasAbs(ABS_MT_SLOT)) {
+    if (!kernelDevice->hasAbs(ABS_X)) {
         delete kernelDevice;
         return;
     }

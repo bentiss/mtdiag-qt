@@ -63,8 +63,10 @@ private:
     HidMT *hid_multitouch;
     GraphicsView *view;
     QHash <int, Touch *> touches;
+    Touch *pointer;
     QList <QBrush *> brushes;
     QColor refColor;
+    QBrush *pointerBrush;
     QGridLayout *gridLayout;
     QSplitter *splitter;
     QBrush *currentBrush;

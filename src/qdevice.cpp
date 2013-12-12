@@ -55,6 +55,8 @@ QDevice::QDevice(KernelDevice *kernelDevice,
     brushes = QList <QBrush *>();
     hue = (rand() % 10) * 36;
     refColor = QColor::fromHsv (hue, 128, 255);
+    pointerBrush = new QBrush(QColor::fromRgbF(0, 0, 0, 0));
+    pointer = new DrawingTouch (view->getScene(), 30);
 
     gridLayout = new QGridLayout(this);
     splitter = new QSplitter(this);
@@ -69,7 +71,7 @@ QDevice::QDevice(KernelDevice *kernelDevice,
         form->lineEdit_driver->setEnabled(false);
     form->lineEdit_node->setText(kernelDevice->getPath());
 
-    if (hid && QString("hid-multitouch") == hid->getDriver()) {
+    if (hid && QString("hid-multitouch") == hid->getDriver() && kernelDevice->hasAbs(ABS_MT_SLOT)) {
         hid_multitouch = new HidMT(udevMgr, hid, this->splitter);
     }
 
@@ -91,17 +93,33 @@ QDevice::~QDevice ()
         delete hid_multitouch;
     foreach (Touch *touch, touches)
         delete touch;
+    delete pointer;
     foreach (QBrush *brush, brushes)
         delete brush;
 }
 
 void QDevice::processEvent (struct input_event *ev)
 {
-    if (ev->type == EV_ABS) {
+    switch (ev->type) {
+    case EV_ABS:
+    {
         Touch *touch;
         bool ok;
         struct input_absinfo *absinfo = kernelDevice->getAbsinfo(&ok, ev->code);
         switch (ev->code) {
+        case ABS_X:
+            pointer->setCx(getCoord (ev->value,
+                                     absinfo->minimum,
+                                     absinfo->maximum) * view->viewWidth());
+            break;
+        case ABS_Y:
+            pointer->setCy(getCoord (ev->value,
+                                     absinfo->minimum,
+                                     absinfo->maximum) * view->viewHeight());
+            break;
+        case ABS_PRESSURE:
+            pointer->setPressed(ev->value > 0);
+            break;
         case ABS_MT_POSITION_X:
             touch = getCurrentTouch();
             touch->setCx(getCoord (ev->value,
@@ -123,10 +141,33 @@ void QDevice::processEvent (struct input_event *ev)
             touch->setPressed(ev->value == 0);
             break;
         }
-    } else if (ev->type == EV_SYN && ev->code == SYN_REPORT) {
-        foreach (Touch *touch, touches) {
-            if (touch->update (currentBrush))
-                currentBrush = nextBrush();
+    }
+        break;
+    case EV_KEY:
+    {
+        switch (ev->code) {
+        case BTN_TOUCH:
+            pointer->setPressed(ev->value > 0);
+            if (!kernelDevice->hasKey(BTN_TOOL_PEN))
+                pointer->setTrackingId(ev->value ? 0 : -1);
+            break;
+        case BTN_TOOL_PEN:
+            pointer->setTrackingId(ev->value ? 0 : -1);
+            break;
+        case BTN_LEFT:
+            pointer->setTrackingId(ev->value ? 0 : -1);
+            break;
+        }
+    }
+        break;
+    case EV_SYN:
+        if (ev->code == SYN_REPORT) {
+            pointer->update(pointerBrush);
+            foreach (Touch *touch, touches) {
+                if (touch->update (currentBrush))
+                    currentBrush = nextBrush();
+            }
+            break;
         }
     }
 
@@ -191,8 +232,8 @@ void QDevice::createBrushes ()
 void QDevice::colorClicked ()
 {
     QColor color = QColorDialog::getColor (refColor, this,
-                                       QString("Choose a color"),
-                                       QColorDialog::ShowAlphaChannel);
+                                           QString("Choose a color"),
+                                           QColorDialog::ShowAlphaChannel);
     if (!color.isValid())
         return;
     refColor = color;
