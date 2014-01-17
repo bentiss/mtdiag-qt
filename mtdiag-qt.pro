@@ -6,6 +6,8 @@
 
 QT       += core gui
 
+VERSION = 0.1
+
 TARGET = mtdiag-qt
 TEMPLATE = app
 
