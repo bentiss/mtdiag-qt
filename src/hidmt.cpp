@@ -436,7 +436,7 @@ void HidMT::processOneFrame()
 
     for (int slot = 0; slot < mt_values.count(); ++slot) {
         struct MT::touch *touch = &mt_values[slot];
-        struct MT::touch *prev_touch;
+        struct MT::touch *prev_touch = NULL;
         for (int i = 0; i < prev_mt_values.count(); ++i) {
             struct MT::touch *prev = &prev_mt_values[i];
             if (*prev->contactID == *touch->contactID) {
