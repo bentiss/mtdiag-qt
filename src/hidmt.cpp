@@ -411,7 +411,7 @@ void HidMT::processOneFrame()
     QPixmap check_icon = QPixmap(QString::fromUtf8(":/icons/check.png"));
     QPixmap fault_icon = QPixmap(QString::fromUtf8(":/icons/fault.png"));
     QPixmap question_icon = QPixmap(QString::fromUtf8(":/icons/question.png"));
-    int progressBarValue = formProtocol->progressBar->value();
+//    int progressBarValue = formProtocol->progressBar->value();
 
     if (!mt_values[0].tipSwitch) {
         formProtocol->icon_tipswitch->setPixmap(fault_icon);
@@ -437,11 +437,9 @@ void HidMT::processOneFrame()
     for (int slot = 0; slot < mt_values.count(); ++slot) {
         struct MT::touch *touch = &mt_values[slot];
         struct MT::touch *prev_touch;
-        int old_slot = -1;
         for (int i = 0; i < prev_mt_values.count(); ++i) {
             struct MT::touch *prev = &prev_mt_values[i];
             if (*prev->contactID == *touch->contactID) {
-                old_slot = i;
                 prev_touch = prev;
                 break;
             }
