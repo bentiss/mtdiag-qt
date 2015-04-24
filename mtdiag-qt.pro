@@ -6,6 +6,8 @@
 
 QT       += core gui
 
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
 VERSION = 0.1
 
 TARGET = mtdiag-qt
@@ -61,7 +63,8 @@ HEADERS  += \
     src/hid.h \
     src/graphicsview.h \
     src/drawingtouch.h \
-    src/colorwidget.h
+    src/colorwidget.h \
+    src/x11.h
 
 FORMS    += \
     forms/quirks.ui \

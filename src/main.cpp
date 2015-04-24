@@ -16,7 +16,7 @@
  **	any later version.
  **/
 
-#include <QtGui/QApplication>
+#include <QApplication>
 #include "mainwindow.h"
 #include <stdlib.h>
 #include <time.h>

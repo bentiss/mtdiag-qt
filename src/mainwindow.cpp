@@ -30,7 +30,7 @@ MainWindow::MainWindow(QApplication *rootApp, QWidget *parent) :
     rootApp(rootApp),
     udev(new Udev()),
     qDevices(QList<QDevice *>()),
-    xi2manager(new XI2Manager(x11::XOpenDisplay(NULL))),
+    xi2manager(new XI2Manager(NULL)),
     actions(QList<VidPidAction *>())
 {
     ui->setupUi(this);

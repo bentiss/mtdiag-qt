@@ -17,15 +17,17 @@
  **/
 
 #include "xi2manager.h"
+#include "x11.h"
 #include <string.h>
 #include <iostream>
 
-using namespace x11;
-
-XI2Manager::XI2Manager(Display *dpy):
-    dpy(dpy),
+XI2Manager::XI2Manager(mt_XDisplay *_dpy):
     map(std::map<int, XI2Device *>())
 {
+    if (_dpy == NULL)
+        dpy = (mt_XDisplay *)x11::XOpenDisplay(NULL);
+    else
+        dpy = _dpy;
 }
 
 XI2Manager::~XI2Manager()
@@ -36,20 +38,20 @@ XI2Manager::~XI2Manager()
         delete it->second;
     }
 
-    XCloseDisplay(dpy);
+    x11::XCloseDisplay(mt_to_display(dpy));
 }
 
 void XI2Manager::appendXI2Devices(const char *c_name)
 {
     int n = 0;
-    XIDeviceInfo *infos;
+    x11::XIDeviceInfo *infos;
     std::string name = c_name;
 
-    infos = XIQueryDevice(dpy, XIAllDevices, &n);
+    infos = x11::XIQueryDevice(mt_to_display(dpy), XIAllDevices, &n);
     for (int i = 0; i < n; ++i) {
-        XIDeviceInfo *info = &infos[i];
+        x11::XIDeviceInfo *info = &infos[i];
         if (!name.compare(info->name) && !map.count(info->deviceid)) {
-            map[info->deviceid] = new XI2Device (dpy, info);
+            map[info->deviceid] = new XI2Device (dpy, (mt_XIDeviceInfo *)info);
         }
     }
     XIFreeDeviceInfo(infos);

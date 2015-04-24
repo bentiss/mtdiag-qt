@@ -24,7 +24,7 @@
 class XI2Manager
 {
 public:
-    XI2Manager(x11::Display *dpy);
+    XI2Manager(mt_XDisplay *dpy);
     ~XI2Manager();
     void appendXI2Devices(const char *name);
 
@@ -32,7 +32,7 @@ public:
     void reattachDevices ();
 
 private:
-    x11::Display *dpy;
+    mt_XDisplay *dpy;
     std::map<int, XI2Device *> map;
 };
 

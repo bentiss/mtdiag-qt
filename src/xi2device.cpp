@@ -17,16 +17,15 @@
  **/
 
 #include "xi2device.h"
+#include "x11.h"
 #include <iostream>
 
-using namespace x11;
-
-XI2Device::XI2Device(Display* dpy, XIDeviceInfo *device):
+XI2Device::XI2Device(mt_XDisplay* dpy, mt_XIDeviceInfo *device):
     dpy(dpy),
-    deviceID(device->deviceid),
-    attachment(device->attachment),
+    deviceID(mt_to_deviceinfo(device)->deviceid),
+    attachment(mt_to_deviceinfo(device)->attachment),
     previousMaster(-1),
-    name(device->name)
+    name(mt_to_deviceinfo(device)->name)
 {
 }
 
@@ -48,14 +47,14 @@ int XI2Device::dettach ()
     c.type = XIDetachSlave;
     c.deviceid = deviceID;
 
-    ret = XIChangeHierarchy(dpy, (XIAnyHierarchyChangeInfo*)&c, 1);
-    XSync(dpy, false);
+    ret = x11::XIChangeHierarchy(mt_to_display(dpy), (x11::XIAnyHierarchyChangeInfo*)&c, 1);
+    x11::XSync(mt_to_display(dpy), false);
     return ret;
 }
 
 int XI2Device::change_attachment (int master)
 {
-    XIAttachSlaveInfo c;
+    x11::XIAttachSlaveInfo c;
     int ret;
 
     if (!master)
@@ -65,7 +64,7 @@ int XI2Device::change_attachment (int master)
     c.deviceid = deviceID;
     c.new_master = master;
 
-    ret = XIChangeHierarchy(dpy, (XIAnyHierarchyChangeInfo*)&c, 1);
-    XSync(dpy, false);
+    ret = XIChangeHierarchy(mt_to_display(dpy), (x11::XIAnyHierarchyChangeInfo*)&c, 1);
+    x11::XSync(mt_to_display(dpy), false);
     return ret;
 }
