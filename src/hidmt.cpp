@@ -263,14 +263,14 @@ void HidMT::autoDetect(bool state)
     bool mt = false;
     while (!mt && ioctl (fdHiddev, HIDIOCGREPORTINFO, &info) == 0) {
         list_usages.clear();
-        for (int field = 0 ; field < info.num_fields ; ++field) {
+        for (unsigned int field = 0 ; field < info.num_fields ; ++field) {
             struct hiddev_field_info field_info;
             memset(&field_info, 0, sizeof(struct hiddev_field_info));
             field_info.report_type = info.report_type;
             field_info.report_id = info.report_id;
             field_info.field_index = field;
             ioctl (fdHiddev, HIDIOCGFIELDINFO, &field_info);
-            for (int usage_index = 0; usage_index < field_info.maxusage; ++usage_index) {
+            for (unsigned int usage_index = 0; usage_index < field_info.maxusage; ++usage_index) {
                 struct hiddev_usage_ref usage;
                 memset(&usage, 0, sizeof(struct hiddev_usage_ref));
                 usage.report_type = info.report_type;
