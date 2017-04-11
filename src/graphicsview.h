@@ -28,7 +28,7 @@ public:
     explicit GraphicsView(QWidget *parent = 0);
     ~GraphicsView();
 
-    void setupView();
+    void setupView(QEvent *event);
     void moveEvent();
 
     int viewWidth() { return viewRect.width(); }
@@ -36,9 +36,10 @@ public:
 
     QGraphicsScene *getScene() { return scene; }
 
+    void moveEvent(QMoveEvent *event);
+
 protected:
     void resizeEvent(QResizeEvent *event);
-    void moveEvent(QMoveEvent *event);
 
 private:
     QGraphicsScene *scene;
@@ -54,7 +55,7 @@ private:
 signals:
 
 public slots:
-    void setFitToScreen (bool value) { fitToScreen = value; setupView();}
+    void setFitToScreen (bool value) { fitToScreen = value; setupView(NULL);}
     void setFullscreen (bool value) { fullscreen = value; }
     void setMaximized (bool value) { maximized = value; }
 };

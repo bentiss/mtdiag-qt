@@ -140,7 +140,7 @@ void MainWindow::removeDevice (UdevDevice *device)
 
 void MainWindow::moveEvent(QMoveEvent *event)
 {
-    ui->graphicsView->moveEvent();
+    ui->graphicsView->moveEvent(event);
 }
 
 void MainWindow::fullscreen (bool value)

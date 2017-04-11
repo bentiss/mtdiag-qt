@@ -57,22 +57,17 @@ QRect GraphicsView::getScreenGeometry()
     return ret;
 }
 
-void GraphicsView::moveEvent()
-{
-    setupView();
-}
-
 void GraphicsView::resizeEvent(QResizeEvent *event)
 {
-    setupView();
+    setupView(event);
 }
 
 void GraphicsView::moveEvent(QMoveEvent *event)
 {
-    setupView();
+    setupView(event);
 }
 
-void GraphicsView::setupView()
+void GraphicsView::setupView(QEvent *event __attribute__((unused)))
 {
     if (fitToScreen) {
         QDesktopWidget *desktop = QApplication::desktop ();

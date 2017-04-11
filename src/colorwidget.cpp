@@ -37,7 +37,7 @@ void ColorWidget::setColor(QColor color)
     setPalette(palette);
 }
 
-void ColorWidget::mouseDoubleClickEvent (QMouseEvent *event)
+void ColorWidget::mouseDoubleClickEvent (QMouseEvent *event __attribute__((unused)))
 {
     doubleClicked();
 }
