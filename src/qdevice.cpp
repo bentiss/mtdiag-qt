@@ -96,6 +96,7 @@ QDevice::~QDevice ()
     delete pointer;
     foreach (QBrush *brush, brushes)
         delete brush;
+    delete pointerBrush;
 }
 
 void QDevice::processEvent (struct input_event *ev)
