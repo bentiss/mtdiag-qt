@@ -37,11 +37,16 @@ public:
     QGraphicsEllipseItem *addEllipse(const QRectF & rect);
 
     void setupView(QRect screenRect, QRect sceneRect, bool fitToScreen);
+
+    void setDevicePrintVisible(bool visible);
 private:
     QGraphicsScene *scene;
     QGraphicsItemGroup *group;
+    QGraphicsRectItem *devicePrint;
+    KernelDevice *kdev;
     bool indirect;
     QRect viewRect;
+    double aspectRatio;
 
 signals:
 

@@ -35,6 +35,7 @@ public:
     void setCy(int newCy) {cy = newCy;}
     void setTrackingId(int newTrackingId) {trackingId = newTrackingId;}
     void setPressed(int newPressed) {pressed = newPressed;}
+    bool active() {return trackingId > 0;}
 
 protected:
     int Cx() {return cx;}

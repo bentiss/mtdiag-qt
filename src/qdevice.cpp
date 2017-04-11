@@ -163,11 +163,15 @@ void QDevice::processEvent (struct input_event *ev)
         break;
     case EV_SYN:
         if (ev->code == SYN_REPORT) {
+            unsigned int count = 0;
             pointer->update(pointerBrush);
             foreach (Touch *touch, touches) {
+                if (touch->active())
+                    ++count;
                 if (touch->update (currentBrush))
                     currentBrush = nextBrush();
             }
+            view->setDevicePrintVisible(count > 0);
             break;
         }
     }
