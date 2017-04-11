@@ -62,6 +62,7 @@ public:
 
     const char *getName() {return name;}
     const char *getPath() {return path;}
+    bool getIndirect();
 
     bool hasAbs (unsigned int code);
     struct input_absinfo *getAbsinfo (bool *ok, unsigned int code);
@@ -87,6 +88,8 @@ private:
     unsigned long key_bitmask[NLONGS(KEY_CNT)];
     unsigned long rel_bitmask[NLONGS(REL_CNT)];
     unsigned long abs_bitmask[NLONGS(ABS_CNT)];
+    unsigned long props[NLONGS(INPUT_PROP_CNT)];
+
     struct input_absinfo absinfo[ABS_CNT];
     int inRangeStates[MAX_SLOT];
     bool keys[KEY_CNT];

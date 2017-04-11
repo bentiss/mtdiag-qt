@@ -46,7 +46,7 @@ QDevice::QDevice(KernelDevice *kernelDevice,
     device(device),
     hid(udevMgr->getHid(device)),
     hid_multitouch(0),
-    view(view)
+    view(view->newGroup(kernelDevice))
 {
     int fd = kernelDevice->getFileDescriptor();
     int hue;
@@ -56,7 +56,7 @@ QDevice::QDevice(KernelDevice *kernelDevice,
     hue = (rand() % 10) * 36;
     refColor = QColor::fromHsv (hue, 128, 255);
     pointerBrush = new QBrush(QColor::fromRgbF(0, 0, 0, 0));
-    pointer = new DrawingTouch (view->getScene(), 30);
+    pointer = new DrawingTouch (this->view, 30);
 
     gridLayout = new QGridLayout(this);
     splitter = new QSplitter(this);
@@ -210,7 +210,7 @@ Touch *QDevice::getCurrentTouch ()
     /* no need to test ok */
 
     if (!touches.contains(slot)) {
-        touches[slot] = new DrawingTouch (view->getScene());
+        touches[slot] = new DrawingTouch (view);
         touches[slot]->setPressed(kernelDevice->getInitialInRangeState(slot) == 0);
     }
     return touches[slot];

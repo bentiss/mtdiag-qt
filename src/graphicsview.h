@@ -20,6 +20,7 @@
 #define GRAPHICSVIEW_H
 
 #include <QGraphicsView>
+#include "deviceview.h"
 
 class GraphicsView : public QGraphicsView
 {
@@ -31,10 +32,9 @@ public:
     void setupView(QEvent *event);
     void moveEvent();
 
-    int viewWidth() { return viewRect.width(); }
-    int viewHeight() { return viewRect.height(); }
-
     QGraphicsScene *getScene() { return scene; }
+
+    DeviceView *newGroup(KernelDevice *kdev);
 
     void moveEvent(QMoveEvent *event);
 
@@ -43,11 +43,12 @@ protected:
 
 private:
     QGraphicsScene *scene;
-    QRect viewRect;
 
     bool fullscreen;
     bool maximized;
     bool fitToScreen;
+
+    QList<DeviceView *> viewList;
 
     QRect getAbsoluteGeometry();
     QRect getScreenGeometry();

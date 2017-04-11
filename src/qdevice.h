@@ -30,6 +30,7 @@
 #include "kernelDevice.h"
 #include "hidmt.h"
 #include "graphicsview.h"
+#include "deviceview.h"
 
 namespace Ui {
 class Form_Input;
@@ -61,7 +62,7 @@ private:
     UdevDevice *device;
     UdevDevice *hid;
     HidMT *hid_multitouch;
-    GraphicsView *view;
+    DeviceView *view;
     QHash <int, Touch *> touches;
     Touch *pointer;
     QList <QBrush *> brushes;

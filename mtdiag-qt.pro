@@ -43,7 +43,8 @@ SOURCES += \
     src/hidmt.cpp \
     src/graphicsview.cpp \
     src/drawingtouch.cpp \
-    src/colorwidget.cpp
+    src/colorwidget.cpp \
+    src/deviceview.cpp
 
 HEADERS  += \
     src/xi2manager.h \
@@ -64,7 +65,8 @@ HEADERS  += \
     src/graphicsview.h \
     src/drawingtouch.h \
     src/colorwidget.h \
-    src/x11.h
+    src/x11.h \
+    src/deviceview.h
 
 FORMS    += \
     forms/quirks.ui \

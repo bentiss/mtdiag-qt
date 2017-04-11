@@ -57,6 +57,7 @@ bool KernelDevice::init()
     memset(abs_bitmask, 0, sizeof(abs_bitmask));
     memset(key_bitmask, 0, sizeof(key_bitmask));
     memset(rel_bitmask, 0, sizeof(rel_bitmask));
+    memset(props, 0, sizeof(props));
     memset(absinfo, 0, sizeof(absinfo));
     memset(keys, false, sizeof(keys));
     memset(rel, 0, sizeof(rel));
@@ -67,6 +68,7 @@ bool KernelDevice::init()
     ioctl (fileDescriptor, EVIOCGBIT (EV_ABS, ABS_CNT), abs_bitmask);
     ioctl (fileDescriptor, EVIOCGBIT (EV_KEY, KEY_CNT), key_bitmask);
     ioctl (fileDescriptor, EVIOCGBIT (EV_REL, REL_CNT), rel_bitmask);
+    ioctl (fileDescriptor, EVIOCGPROP (sizeof(props)), props);
 
     for (int bit = 0; bit < ABS_CNT; ++bit) {
         if (TestBit (bit, abs_bitmask))
@@ -144,6 +146,11 @@ void KernelDevice::event ()
                 processEvent(&ev[i], args);
         }
     }
+}
+
+bool KernelDevice::getIndirect()
+{
+    return !TestBit(INPUT_PROP_DIRECT, props);
 }
 
 bool KernelDevice::hasAbs (unsigned int code)

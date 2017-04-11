@@ -21,9 +21,9 @@
 static QPen pressedPen = QPen(Qt::black, 5);
 static QPen releasedPen = QPen(Qt::black, 1);
 
-DrawingTouch::DrawingTouch(QGraphicsScene *scene, int radius, QObject *parent) :
+DrawingTouch::DrawingTouch(DeviceView *view, int radius, QObject *parent) :
     Touch(parent),
-    scene(scene),
+    view(view),
     ellipse(0),
     radius(radius)
 {
@@ -37,7 +37,7 @@ bool DrawingTouch::update(QBrush *color)
         ellipse->setVisible(TrackingId() >= 0);
     }
     else {
-        ellipse = scene->addEllipse(QRectF(Cx() - radius, Cy() - radius,
+        ellipse = view->addEllipse(QRectF(Cx() - radius, Cy() - radius,
                                            2 * radius, 2 * radius));
     }
     if (TrackingId() >= 0) {
@@ -57,6 +57,6 @@ bool DrawingTouch::update(QBrush *color)
 
 DrawingTouch::~DrawingTouch()
 {
-    scene->removeItem(ellipse);
+    view->removeItem(ellipse);
     delete ellipse;
 }

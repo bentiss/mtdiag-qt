@@ -28,16 +28,18 @@
 GraphicsView::GraphicsView(QWidget *parent) :
     QGraphicsView(parent),
     scene(new QGraphicsScene ()),
-    viewRect(QRect ()),
     fullscreen(false),
     maximized(false),
-    fitToScreen(false)
+    fitToScreen(false),
+    viewList(QList<DeviceView *>())
 {
     setScene(scene);
 }
 
 GraphicsView::~GraphicsView()
 {
+    foreach (DeviceView *v, viewList)
+        delete v;
     delete scene;
 }
 
@@ -57,6 +59,14 @@ QRect GraphicsView::getScreenGeometry()
     return ret;
 }
 
+DeviceView *GraphicsView::newGroup(KernelDevice *kdev)
+{
+    DeviceView *view = new DeviceView(scene, kdev);
+    viewList.append(view);
+
+    return view;
+}
+
 void GraphicsView::resizeEvent(QResizeEvent *event)
 {
     setupView(event);
@@ -69,12 +79,9 @@ void GraphicsView::moveEvent(QMoveEvent *event)
 
 void GraphicsView::setupView(QEvent *event __attribute__((unused)))
 {
-    if (fitToScreen) {
-        QDesktopWidget *desktop = QApplication::desktop ();
-        viewRect = desktop->screenGeometry(this);
-        setSceneRect(getScreenGeometry());
-    } else {
-        viewRect = rect();
-        setSceneRect(viewRect);
-    }
+    setSceneRect(getScreenGeometry());
+
+    QDesktopWidget *desktop = QApplication::desktop ();
+    foreach (DeviceView *v, viewList)
+        v->setupView(desktop->screenGeometry(this), getScreenGeometry(), fitToScreen);
 }
