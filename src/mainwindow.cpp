@@ -96,8 +96,10 @@ void MainWindow::addDevice (UdevDevice *device)
 
     kernelDevice = new KernelDevice (device->getDevnode());
 
-    if (!kernelDevice->init())
+    if (!kernelDevice->init()) {
+        delete kernelDevice;
         return;
+    }
 
     if (!kernelDevice->hasAbs(ABS_X)) {
         delete kernelDevice;
