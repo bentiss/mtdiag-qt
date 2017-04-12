@@ -75,6 +75,9 @@
     </item>
     <item row="0" column="3">
      <widget class="QCommandLinkButton" name="commandLinkButton_fit_to_screen">
+      <property name="toolTip">
+       <string>For direct devices only (touchscreens, tablets, etc...)</string>
+      </property>
       <property name="text">
        <string>Fit to screen</string>
       </property>
