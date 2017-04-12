@@ -6,7 +6,7 @@
  **	this files contains a subclass of Touch
  **
  **	Contributors:
- **		Benjamin Tissoires <benjamin.tissoires@enac.fr>
+ **		Benjamin Tissoires <benjamin.tissoires@gmail.com>
  **
  **
  **	This program is provided to you as free software;
