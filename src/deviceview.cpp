@@ -31,8 +31,8 @@ DeviceView::DeviceView(QGraphicsScene *scene, KernelDevice *dev, QObject *parent
     devicePrint->setVisible(false);
 
     bool okX, okY;
-    struct input_absinfo *xAbsInfo = kdev->getAbsinfo(&okX, ABS_X);
-    struct input_absinfo *yAbsInfo = kdev->getAbsinfo(&okY, ABS_Y);
+    const struct input_absinfo *xAbsInfo = kdev->getAbsinfo(&okX, ABS_X);
+    const struct input_absinfo *yAbsInfo = kdev->getAbsinfo(&okY, ABS_Y);
 
     if (okX && okY) {
         double physicalWidth  = (xAbsInfo->maximum - xAbsInfo->minimum) / xAbsInfo->resolution;

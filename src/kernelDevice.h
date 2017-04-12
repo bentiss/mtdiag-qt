@@ -23,6 +23,7 @@
 extern "C" {
 #include <limits.h>
 #include <linux/input.h>
+#include <libevdev/libevdev.h>
 
 #ifndef ABS_MT_DISTANCE
 #define ABS_MT_DISTANCE		0x3b	/* Contact hover distance */
@@ -65,7 +66,7 @@ public:
     bool getIndirect();
 
     bool hasAbs (unsigned int code);
-    struct input_absinfo *getAbsinfo (bool *ok, unsigned int code);
+    const struct input_absinfo *getAbsinfo(bool *ok, unsigned int code);
 
     bool hasKey (unsigned int code);
     bool getKey (bool *ok, unsigned int code);
@@ -82,19 +83,8 @@ private:
     void *args;
     int fileDescriptor;
     char name[1024];
-    int inputID;
 
-
-    unsigned long key_bitmask[NLONGS(KEY_CNT)];
-    unsigned long rel_bitmask[NLONGS(REL_CNT)];
-    unsigned long abs_bitmask[NLONGS(ABS_CNT)];
-    unsigned long props[NLONGS(INPUT_PROP_CNT)];
-
-    struct input_absinfo absinfo[ABS_CNT];
-    int inRangeStates[MAX_SLOT];
-    bool keys[KEY_CNT];
-    int rel[REL_CNT];
-
+    struct libevdev *evdev;
 };
 
 #endif // KDEVICE_H

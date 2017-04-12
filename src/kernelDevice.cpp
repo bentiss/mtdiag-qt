@@ -37,8 +37,7 @@ KernelDevice::KernelDevice(const char *path,
                  void *args):
     initialized(false),
     processEvent(processEvent),
-    args(args),
-    inputID(0)
+    args(args)
 {
     this->path = (char *)malloc (strlen(path) + 1);
     memcpy(this->path, path, strlen(path) + 1);
@@ -46,48 +45,21 @@ KernelDevice::KernelDevice(const char *path,
 
 bool KernelDevice::init()
 {
-    struct input_mt_request_layout mt_request;
     if (initialized)
         return true;
 
-    fileDescriptor = open(path, O_RDONLY);
+    fileDescriptor = open(path, O_RDONLY | O_NONBLOCK);
     if (fileDescriptor < 0)
         return false;
 
-    memset(abs_bitmask, 0, sizeof(abs_bitmask));
-    memset(key_bitmask, 0, sizeof(key_bitmask));
-    memset(rel_bitmask, 0, sizeof(rel_bitmask));
-    memset(props, 0, sizeof(props));
-    memset(absinfo, 0, sizeof(absinfo));
-    memset(keys, false, sizeof(keys));
-    memset(rel, 0, sizeof(rel));
-    memset(name, '\0', sizeof(name));
-    memset(inRangeStates, 0, sizeof(inRangeStates));
-
-
-    ioctl (fileDescriptor, EVIOCGBIT (EV_ABS, ABS_CNT), abs_bitmask);
-    ioctl (fileDescriptor, EVIOCGBIT (EV_KEY, KEY_CNT), key_bitmask);
-    ioctl (fileDescriptor, EVIOCGBIT (EV_REL, REL_CNT), rel_bitmask);
-    ioctl (fileDescriptor, EVIOCGPROP (sizeof(props)), props);
-
-    for (int bit = 0; bit < ABS_CNT; ++bit) {
-        if (TestBit (bit, abs_bitmask))
-             ioctl (fileDescriptor, EVIOCGABS (bit), &absinfo[bit]);
+    int rc = libevdev_new_from_fd(fileDescriptor, &evdev);
+    if (rc < 0) {
+        close (fileDescriptor);
+        fileDescriptor = -1;
+        return false;
     }
 
-    ioctl (fileDescriptor, EVIOCGNAME(sizeof(name)), name);
-    ioctl (fileDescriptor, EVIOCGID, &inputID);
-
-    bool ok;
-    int num_slots = getAbsinfo(&ok, ABS_MT_SLOT)->maximum + 1;
-
-#ifdef EVIOCGMTSLOTS
-    if (hasAbs(ABS_MT_DISTANCE)) {
-        mt_request.code = ABS_MT_DISTANCE;
-        ioctl (fileDescriptor, EVIOCGMTSLOTS ((num_slots + 1) * sizeof(__s32)), &mt_request);
-        memcpy(inRangeStates, &mt_request.values, num_slots);
-    }
-#endif
+    strncpy(name, libevdev_get_name(evdev), sizeof(name));
 
     initialized = true;
     return initialized;
@@ -100,93 +72,67 @@ KernelDevice::~KernelDevice ()
     free(path);
 }
 
-/* just a magic number to reduce the number of reads */
-#define NUM_EVENTS 16
-
 void KernelDevice::event ()
 {
-    struct input_event ev[NUM_EVENTS];
-    int i, len = sizeof(ev);
+    int rc;
+    struct input_event ev;
 
-    while (len == sizeof(ev))
-    {
-        len = read(fileDescriptor, &ev, sizeof(ev));
-        if (len <= 0)
-        {
-            if (errno == ENODEV) /* May happen after resume */
-            {
-                close(fileDescriptor);
-                fileDescriptor = -1;
-            } else if (errno != EAGAIN)
-                std::cerr << name << "Read error: " << strerror(errno) << std::endl;
-            break;
-        }
+    do {
+        rc = libevdev_next_event (evdev, LIBEVDEV_READ_FLAG_NORMAL, &ev);
 
-        /* The kernel promises that we always only read a complete
-         * event, so len != sizeof ev is an error. */
-        if (len % sizeof(ev[0])) {
-            /* We use X_NONE here because it doesn't alloc */
-            std::cerr << name << "Read error: " << strerror(errno) << std::endl;
-            break;
-        }
-
-        for (i = 0; i < (int)(len/sizeof(ev[0])); i++) {
-            switch (ev[i].type) {
-            case EV_ABS:
-                absinfo[ev[i].code].value = ev[i].value;
-                break;
-            case EV_REL:
-                rel[ev[i].code] = ev[i].value;
-                break;
-            case EV_KEY:
-                 keys[ev[i].code] = ev[i].value;
-                 break;
-            }
-            if (processEvent)
-                processEvent(&ev[i], args);
-        }
-    }
+        if ((rc == LIBEVDEV_READ_STATUS_SUCCESS || rc == LIBEVDEV_READ_STATUS_SYNC) && processEvent)
+            processEvent(&ev, args);
+    } while (rc != -EAGAIN);
 }
 
 bool KernelDevice::getIndirect()
 {
-    return !TestBit(INPUT_PROP_DIRECT, props);
+    return !libevdev_has_property(evdev, INPUT_PROP_DIRECT);
 }
 
 bool KernelDevice::hasAbs (unsigned int code)
 {
-    return TestBit (code, abs_bitmask);
+    return libevdev_has_event_code(evdev, EV_ABS, code);
 }
 
-struct input_absinfo *KernelDevice::getAbsinfo (bool *ok, unsigned int code)
+const struct input_absinfo *KernelDevice::getAbsinfo (bool *ok, unsigned int code)
 {
-    *ok = code <= ABS_MAX;
-    return &absinfo[code];
+    const struct input_absinfo *absinfo = libevdev_get_abs_info(evdev, code);
+    *ok = absinfo != nullptr;
+    return absinfo;
 }
 
 bool KernelDevice::hasKey (unsigned int code)
 {
-    return TestBit (code, key_bitmask);
+     return libevdev_has_event_code(evdev, EV_KEY, code);
 }
 
 bool KernelDevice::getKey (bool *ok, unsigned int code)
 {
-    *ok = code <= KEY_MAX;
-    return keys[code];
+    int value;
+    int rc = libevdev_fetch_event_value	(evdev, EV_KEY, code, &value);
+    *ok = rc > 0;
+    return value;
 }
 
 bool KernelDevice::hasRel (unsigned int code)
 {
-    return TestBit (code, rel_bitmask);
+    return libevdev_has_event_code(evdev, EV_REL, code);
 }
 
 int KernelDevice::getRel (bool *ok, unsigned int code)
 {
-    *ok = code <= REL_MAX;
-    return rel[code];
+    int value;
+    int rc = libevdev_fetch_event_value	(evdev, EV_REL, code, &value);
+    *ok = rc > 0;
+    return value;
 }
 
 int KernelDevice::getInitialInRangeState (unsigned int slot)
 {
-    return inRangeStates[slot];
+    int value;
+    int rc = libevdev_fetch_slot_value(evdev, slot, ABS_MT_DISTANCE, &value);
+    if (!rc)
+        return 0;
+    return value;
 }

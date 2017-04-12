@@ -106,7 +106,7 @@ void QDevice::processEvent (struct input_event *ev)
     {
         Touch *touch;
         bool ok;
-        struct input_absinfo *absinfo = kernelDevice->getAbsinfo(&ok, ev->code);
+        const struct input_absinfo *absinfo = kernelDevice->getAbsinfo(&ok, ev->code);
         switch (ev->code) {
         case ABS_X:
             pointer->setCx(getCoord (ev->value,

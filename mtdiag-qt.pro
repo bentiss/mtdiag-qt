@@ -13,6 +13,9 @@ VERSION = 0.2
 TARGET = mtdiag-qt
 TEMPLATE = app
 
+CONFIG += link_pkgconfig
+PKGCONFIG += libevdev
+
 LIBS += -ludev -lX11 -lXi
 INCLUDEPATH += /media/data/Src/Kernel/all/include/
 
