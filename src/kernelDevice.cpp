@@ -98,7 +98,7 @@ bool KernelDevice::hasAbs (unsigned int code)
 const struct input_absinfo *KernelDevice::getAbsinfo (bool *ok, unsigned int code)
 {
     const struct input_absinfo *absinfo = libevdev_get_abs_info(evdev, code);
-    *ok = absinfo != nullptr;
+    *ok = absinfo != NULL;
     return absinfo;
 }
 
