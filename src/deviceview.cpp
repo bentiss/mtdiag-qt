@@ -25,6 +25,7 @@ DeviceView::DeviceView(QGraphicsScene *scene, KernelDevice *dev, QObject *parent
     devicePrint(new QGraphicsRectItem(0,0,1,1, group)),
     kdev(dev),
     indirect(dev->getIndirect()),
+    fitToScreen(indirect),
     aspectRatio(1)
 {
     scene->addItem(group);
@@ -60,6 +61,8 @@ QGraphicsEllipseItem *DeviceView::addEllipse(const QRectF & rect)
 
 void DeviceView::setupView(QRect screenRect, QRect sceneRect, bool fitToScreen)
 {
+    this->fitToScreen = fitToScreen;
+
     /* Direct screen mapping is rather simple, keep it short */
     if (!indirect && fitToScreen) {
         this->viewRect = screenRect;
@@ -90,6 +93,9 @@ void DeviceView::setupView(QRect screenRect, QRect sceneRect, bool fitToScreen)
 
 void DeviceView::setDevicePrintVisible(bool visible)
 {
-    devicePrint->setVisible(visible);
+    if (indirect || !fitToScreen)
+        devicePrint->setVisible(visible);
+    else
+        devicePrint->setVisible(false);
 }
 

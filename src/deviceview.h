@@ -45,6 +45,7 @@ private:
     QGraphicsRectItem *devicePrint;
     KernelDevice *kdev;
     bool indirect;
+    bool fitToScreen;
     QRect viewRect;
     double aspectRatio;
 
