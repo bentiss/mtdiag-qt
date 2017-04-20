@@ -28,6 +28,8 @@ extern "C" {
 #include <linux/input.h>
 }
 
+static QList<QDevice *> devices = QList<QDevice *> ();
+
 static void staticProcessEvent (struct input_event *ev, void *args)
 {
     QDevice *obj = (QDevice *)args;
@@ -81,10 +83,12 @@ QDevice::QDevice(KernelDevice *kernelDevice,
     QObject::connect(form->colorWidget, SIGNAL(doubleClicked()),
                      this, SLOT(colorClicked()));
     QObject::connect(sn, SIGNAL(activated(int)), this, SLOT(fdReady(int)));
+    devices.append(this);
 }
 
 QDevice::~QDevice ()
 {
+    devices.removeOne(this);
     delete sn;
     delete hid;
     delete kernelDevice;
@@ -171,7 +175,9 @@ void QDevice::processEvent (struct input_event *ev)
                 if (touch->update (currentBrush))
                     currentBrush = nextBrush();
             }
-            view->setDevicePrintVisible(count > 0);
+            foreach (QDevice *d, devices) {
+                d->view->setDevicePrintVisible(d == this);
+            }
             break;
         }
     }
