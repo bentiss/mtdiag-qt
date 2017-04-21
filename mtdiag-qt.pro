@@ -82,6 +82,11 @@ OTHER_FILES +=
 RESOURCES += \
     resources/icons.qrc
 
+isEmpty(PREFIX) {
+ PREFIX = /usr/local
+}
+target.path = $$PREFIX/bin
+INSTALLS += target
 
 
 
