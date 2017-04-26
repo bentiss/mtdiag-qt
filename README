@@ -13,3 +13,11 @@ GNU General Public License as published by the Free Software
 Foundation; either version 2 of the License, or (at your option)
 any later version.
 
+Use mtdiag-launch, which as a setuid-root program does privileged
+operations on mtdiag-qt's behalf. It also requires that you add
+yourself to the "mtdiag-launch" group:
+
+$ sudo groupadd mtdiag-launch
+$ sudo usermod -a -G mtdiag-launch $USER
+$ # Log all the way out (of X, etc.)
+$ mtdiag-launch
