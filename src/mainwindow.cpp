@@ -19,8 +19,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "kernelDevice.h"
+#include <QProcessEnvironment>
 
 #include <fcntl.h>
+#include "launcher/launcher_mtdiag_launcher.h"
 
 extern "C" {
 #include <linux/input.h>
@@ -33,13 +35,18 @@ MainWindow::MainWindow(QApplication *rootApp, QWidget *parent) :
     udev(new Udev()),
     qDevices(QList<QDevice *>()),
     xi2manager(new XI2Manager(NULL)),
-    actions(QList<VidPidAction *>())
+    actions(QList<VidPidAction *>()),
+    fd_socket(-1)
 {
     ui->setupUi(this);
     ui->graphicsView->setFitToScreen(ui->commandLinkButton_fit_to_screen->isChecked());
 
     if (rootApp)
         rootApp->installEventFilter(this);
+
+    QString mtdiag_fd = QProcessEnvironment::systemEnvironment().value("MTDIAG_LAUNCHER_SOCK");
+    if (mtdiag_fd != NULL)
+        fd_socket = mtdiag_fd.toInt();
 
     QList<UdevDevice *> inputDevices = udev->getInputDevices();
 
@@ -95,12 +102,17 @@ void MainWindow::addDevice (UdevDevice *device)
 {
     KernelDevice *kernelDevice;
     QDevice *qDev;
-    int fd;
+    int fd = -1;
 
     /* kernelDevice will close the file descriptor when time comes */
-    fd = open(device->getDevnode(), O_RDONLY | O_NONBLOCK);
-    if (fd < 0)
-        return;
+    if (fd_socket > 0)
+        fd = launcher_mtdiag_launch_open(fd_socket, device->getDevnode(), O_RDONLY | O_NONBLOCK);
+
+    if (fd < 0) {
+        fd = open(device->getDevnode(), O_RDONLY | O_NONBLOCK);
+        if (fd < 0)
+            return;
+    }
 
     kernelDevice = new KernelDevice (device->getDevnode(), fd);
 

@@ -17,3 +17,6 @@ setuid.extra = chown root '$(INSTALL_ROOT)'$$PREFIX/bin/mtdiag-launch ; \
 INSTALLS += target setuid
 
 DEFINES += BINDIR='\'"$$PREFIX/bin"\''
+
+HEADERS += \
+    launcher/mtdiag-launch.h

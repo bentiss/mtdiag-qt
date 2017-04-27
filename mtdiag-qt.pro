@@ -45,7 +45,8 @@ SOURCES += \
     src/graphicsview.cpp \
     src/drawingtouch.cpp \
     src/colorwidget.cpp \
-    src/deviceview.cpp
+    src/deviceview.cpp \
+    launcher/launcher_mtdiag_launcher.c
 
 HEADERS  += \
     src/xi2manager.h \
@@ -67,7 +68,8 @@ HEADERS  += \
     src/drawingtouch.h \
     src/colorwidget.h \
     src/x11.h \
-    src/deviceview.h
+    src/deviceview.h \
+    launcher/launcher_mtdiag_launcher.h
 
 FORMS    += \
     forms/quirks.ui \

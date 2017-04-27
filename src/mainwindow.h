@@ -55,6 +55,7 @@ private:
     QSocketNotifier *sn;
     XI2Manager *xi2manager;
     QList<VidPidAction *> actions;
+    int fd_socket;
 
     void addDevice (UdevDevice *device);
     void removeDevice (UdevDevice *device);
