@@ -136,6 +136,8 @@ void MainWindow::addDevice (UdevDevice *device)
     xi2manager->appendXI2Devices(kernelDevice->getName());
     if (ui->commandLinkButton_disableX11->isChecked())
         xi2manager->dettachDevices();
+
+    ui->graphicsView->setupView(NULL);
 }
 
 void MainWindow::removeDevice (UdevDevice *device)
