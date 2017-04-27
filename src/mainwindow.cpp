@@ -20,6 +20,8 @@
 #include "ui_mainwindow.h"
 #include "kernelDevice.h"
 
+#include <fcntl.h>
+
 extern "C" {
 #include <linux/input.h>
 }
@@ -93,8 +95,14 @@ void MainWindow::addDevice (UdevDevice *device)
 {
     KernelDevice *kernelDevice;
     QDevice *qDev;
+    int fd;
 
-    kernelDevice = new KernelDevice (device->getDevnode());
+    /* kernelDevice will close the file descriptor when time comes */
+    fd = open(device->getDevnode(), O_RDONLY | O_NONBLOCK);
+    if (fd < 0)
+        return;
+
+    kernelDevice = new KernelDevice (device->getDevnode(), fd);
 
     if (!kernelDevice->init()) {
         delete kernelDevice;

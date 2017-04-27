@@ -19,9 +19,6 @@
 #include "kernelDevice.h"
 #include <iostream>
 #include <errno.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -32,12 +29,13 @@ struct input_mt_request_layout {
     __s32 values[MAX_SLOT];
 };
 
-KernelDevice::KernelDevice(const char *path,
+KernelDevice::KernelDevice(const char *path, int fd,
                  void (*processEvent)(struct input_event*, void*),
                  void *args):
     initialized(false),
     processEvent(processEvent),
-    args(args)
+    args(args),
+    fileDescriptor(fd)
 {
     this->path = (char *)malloc (strlen(path) + 1);
     memcpy(this->path, path, strlen(path) + 1);
@@ -47,10 +45,6 @@ bool KernelDevice::init()
 {
     if (initialized)
         return true;
-
-    fileDescriptor = open(path, O_RDONLY | O_NONBLOCK);
-    if (fileDescriptor < 0)
-        return false;
 
     int rc = libevdev_new_from_fd(fileDescriptor, &evdev);
     if (rc < 0) {

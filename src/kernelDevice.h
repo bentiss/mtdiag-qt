@@ -44,7 +44,7 @@ extern "C" {
 class KernelDevice
 {
 public:
-    KernelDevice(const char *path, void (*processEvent)(struct input_event*, void*) = 0,
+    KernelDevice(const char *path, int fd, void (*processEvent)(struct input_event*, void*) = 0,
             void *args = 0);
     ~KernelDevice ();
 
