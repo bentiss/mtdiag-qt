@@ -63,6 +63,7 @@ private:
     UdevDevice *hid;
     HidMT *hid_multitouch;
     DeviceView *view;
+    GraphicsView* parentView;
     QHash <int, Touch *> touches;
     Touch *pointer;
     QList <QBrush *> brushes;

@@ -67,6 +67,12 @@ DeviceView *GraphicsView::newGroup(KernelDevice *kdev)
     return view;
 }
 
+void GraphicsView::deleteGroup(DeviceView *group)
+{
+    viewList.removeAll(group);
+    delete group;
+}
+
 void GraphicsView::resizeEvent(QResizeEvent *event)
 {
     setupView(event);

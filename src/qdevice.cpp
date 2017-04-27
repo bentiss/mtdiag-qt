@@ -48,7 +48,8 @@ QDevice::QDevice(KernelDevice *kernelDevice,
     device(device),
     hid(udevMgr->getHid(device)),
     hid_multitouch(0),
-    view(view->newGroup(kernelDevice))
+    view(view->newGroup(kernelDevice)),
+    parentView(view)
 {
     int fd = kernelDevice->getFileDescriptor();
     int hue;
@@ -88,6 +89,7 @@ QDevice::QDevice(KernelDevice *kernelDevice,
 
 QDevice::~QDevice ()
 {
+    parentView->deleteGroup(view);
     devices.removeOne(this);
     delete sn;
     delete hid;

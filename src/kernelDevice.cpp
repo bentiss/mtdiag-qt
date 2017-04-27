@@ -76,6 +76,9 @@ void KernelDevice::event ()
 
         if ((rc == LIBEVDEV_READ_STATUS_SUCCESS || rc == LIBEVDEV_READ_STATUS_SYNC) && processEvent)
             processEvent(&ev, args);
+
+        if (rc == -ENODEV)
+            return;
     } while (rc != -EAGAIN);
 }
 

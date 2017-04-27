@@ -38,6 +38,7 @@ public:
 
     void moveEvent(QMoveEvent *event);
 
+    void deleteGroup(DeviceView *group);
 protected:
     void resizeEvent(QResizeEvent *event);
 
