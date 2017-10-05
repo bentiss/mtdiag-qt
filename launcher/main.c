@@ -367,6 +367,8 @@ handle_signal(struct mtdiag_launch *ml)
 static void
 drop_privileges(struct mtdiag_launch *ml)
 {
+    /* we need to make sure we drop any group cabability first */
+    setgroups(0, NULL);
 	if (setgid(ml->pw->pw_gid) < 0 ||
 #ifdef HAVE_INITGROUPS
 	    initgroups(ml->pw->pw_name, ml->pw->pw_gid) < 0 ||
