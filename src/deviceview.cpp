@@ -36,8 +36,16 @@ DeviceView::DeviceView(QGraphicsScene *scene, KernelDevice *dev, QObject *parent
     const struct input_absinfo *yAbsInfo = kdev->getAbsinfo(&okY, ABS_Y);
 
     if (okX && okY) {
-        double physicalWidth  = (xAbsInfo->maximum - xAbsInfo->minimum) / xAbsInfo->resolution;
-        double physicalHeight = (yAbsInfo->maximum - yAbsInfo->minimum) / yAbsInfo->resolution;
+        int xRes = xAbsInfo->resolution;
+        int yRes = xAbsInfo->resolution;
+
+        if (xRes == 0)
+             xRes = 50;
+        if (yRes == 0)
+             yRes = 50;
+
+        double physicalWidth  = (xAbsInfo->maximum - xAbsInfo->minimum) / xRes;
+        double physicalHeight = (yAbsInfo->maximum - yAbsInfo->minimum) / yRes;
 
         aspectRatio = physicalHeight / physicalWidth;
     }
